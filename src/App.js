@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Welcome from "./App/Pages/Welcome";
+import Error404 from "./App/Pages/Error404";
 import UserLogin from "./App/Pages/User/UserLogin";
 import UserSignup from "./App/Pages/User/UserSignup";
 import UserDash from "./App/Pages/User/UserDash";
@@ -21,6 +22,8 @@ function App() {
           <Route path="/healthcare/login" component={DoctorLogin} />
           <Route path="/healthcare/signup" component={DoctorSignup} />
           <Route path="/healthcare/:slug" component={DoctorDash} />
+
+          <Route path="*" component={Error404} />
         </Switch>
       </Router>
     </div>
