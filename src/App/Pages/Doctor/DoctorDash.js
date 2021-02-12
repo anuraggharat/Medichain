@@ -24,6 +24,9 @@ export default function DoctorDash() {
       <div id="main">
         <div className="container bg-light">
           <div className="container ">
+            <div className="row p-3 bg-white mb-3">
+              <h3>User Dashboard</h3>
+            </div>
             <div className="row">
               <div className="col-lg-6 col-sm-12">
                 <div className="card border-0 shadow">
@@ -57,7 +60,7 @@ export default function DoctorDash() {
                   <div className="card-body">
                     <h3 className="card-title">
                       <BiUserCircle className="mr-3" />
-                      Your Profile
+                      Doctor Profile
                     </h3>
                     <div className="border-top mb-3"></div>
                     <ul className="list-group p-0 list-group-flush">
@@ -85,7 +88,7 @@ export default function DoctorDash() {
                       </li>
                       <li className="list-group-item pl-0">
                         <div className="row">
-                          <div className="col-lg-4 text-muted">
+                          <div className="col-lg-4 ">
                             <p className="font-weight-bold">Date of Birth</p>
                           </div>
                           <div className="col-lg-8 text-muted">
