@@ -1,7 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import UserAvatar from "../../Assets/doctor.svg";
 import SideComponent from "../../Components/SideComponent";
-
 export default function UserLogin() {
   return (
     <div className="container-fluid min-vh-100 ">
@@ -15,10 +15,16 @@ export default function UserLogin() {
         and scrambled"
         />
         <div className="col-lg-8 min-vh-100 bg-white justify-content-center align-items-center d-flex">
-          <div className="container my-auto text-center">
-            <h1 className="mb-5">LOGIN</h1>
+          <div className="container my-auto ">
             <div className="w-75 mx-auto ">
-              <form>
+              <h3 className="display-4 mb-3">Login</h3>
+              <p className="lead">
+                Already a user ?{"  "}
+                <Link to="/user/signup" className="">
+                  Signup.
+                </Link>
+              </p>
+              <form className="border-top pt-4">
                 <div className="mb-4 ">
                   <input
                     type="email"
