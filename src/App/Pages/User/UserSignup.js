@@ -1,6 +1,6 @@
 import React from "react";
 import SideComponent from "../../Components/SideComponent";
-import UserAvatar from "../../Assets/doctor.svg";
+import UserAvatar from "../../Assets/man.svg";
 import { Link } from "react-router-dom";
 
 export default function UserSignup() {

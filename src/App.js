@@ -19,9 +19,9 @@ function App() {
           <Route path="/user/signup" component={UserSignup} />
           <Route path="/user/:slug" component={UserDash} />
           {/* Healthcare worker routes */}
-          <Route path="/healthcare/login" component={DoctorLogin} />
-          <Route path="/healthcare/signup" component={DoctorSignup} />
-          <Route path="/healthcare/:slug" component={DoctorDash} />
+          <Route path="/doctor/login" component={DoctorLogin} />
+          <Route path="/doctor/signup" component={DoctorSignup} />
+          <Route path="/doctor/:slug" component={DoctorDash} />
 
           <Route path="*" component={Error404} />
         </Switch>

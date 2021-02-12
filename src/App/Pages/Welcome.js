@@ -8,6 +8,9 @@ export default function Welcome() {
       <Link className="btn btn-primary" to="/user/login">
         User Login
       </Link>
+      <Link className="btn btn-primary" to="/doctor/login">
+        Doctor Login
+      </Link>
     </div>
   );
 }
