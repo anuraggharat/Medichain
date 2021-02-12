@@ -22,3 +22,6 @@ body {
   border-radius: 25px !important;
   border: 1px solid var(--primary-color);
 }
+.bg-light {
+  background-color: #f3f4f6 !important;
+}
