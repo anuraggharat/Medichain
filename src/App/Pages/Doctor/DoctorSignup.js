@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function DoctorSignup() {
   return (
     <div className="container-fluid min-vh-100 ">
-      <div className="row">
+      <div className="row  ">
         <div className="col-lg-8 min-vh-100 bg-white justify-content-center align-items-center d-flex">
           <div className="container my-auto ">
             <div className="w-75 mx-auto ">
@@ -23,7 +23,7 @@ export default function DoctorSignup() {
                     type="text"
                     className="form-control border-0 bg-light rounded "
                     id="name"
-                    placeholder="Your Full Name"
+                    placeholder="Full Name"
                   />
                 </div>
                 <div className="mb-4 ">
@@ -31,7 +31,7 @@ export default function DoctorSignup() {
                     type="text"
                     className="form-control border-0 bg-light rounded "
                     id="phoneno"
-                    placeholder="Your Phone number"
+                    placeholder="Phone number"
                   />
                 </div>
                 <div className="mb-4 ">
@@ -41,6 +41,40 @@ export default function DoctorSignup() {
                     id="email"
                     placeholder="Email"
                   />
+                </div>
+                <div className="mb-4 ">
+                  <input
+                    type="text"
+                    className="form-control border-0 bg-light rounded "
+                    id="specialization"
+                    placeholder="Area of Specialization"
+                  />
+                </div>
+                <div className="row mb-4">
+                  <div className="col-lg-4">
+                    <input
+                      type="text"
+                      className="form-control border-0 bg-light rounded "
+                      id="gender"
+                      placeholder="gender"
+                    />
+                  </div>
+                  <div className="col-lg-4">
+                    <input
+                      type="number"
+                      className="form-control border-0 bg-light rounded "
+                      id="age"
+                      placeholder="Age"
+                    />
+                  </div>
+                  <div className="col-lg-4">
+                    <input
+                      type="text"
+                      className="form-control border-0 bg-light rounded "
+                      id="city"
+                      placeholder="City name"
+                    />
+                  </div>
                 </div>
                 <div className="mb-4">
                   <input

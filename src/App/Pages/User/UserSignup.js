@@ -13,7 +13,7 @@ export default function UserSignup() {
               <h1 className="display-4 mb-3">Signup.</h1>
               <p className="lead">
                 Already a user ?{"  "}
-                <Link to="user/login" className="">
+                <Link to="/user/login" className="">
                   Login.
                 </Link>
               </p>
@@ -41,6 +41,32 @@ export default function UserSignup() {
                     id="email"
                     placeholder="Email"
                   />
+                </div>
+                <div className="row mb-4">
+                  <div className="col-lg-4">
+                    <input
+                      type="text"
+                      className="form-control border-0 bg-light rounded "
+                      id="gender"
+                      placeholder="gender"
+                    />
+                  </div>
+                  <div className="col-lg-4">
+                    <input
+                      type="number"
+                      className="form-control border-0 bg-light rounded "
+                      id="age"
+                      placeholder="Age"
+                    />
+                  </div>
+                  <div className="col-lg-4">
+                    <input
+                      type="text"
+                      className="form-control border-0 bg-light rounded "
+                      id="city"
+                      placeholder="City name"
+                    />
+                  </div>
                 </div>
                 <div className="mb-4">
                   <input
