@@ -1,6 +1,10 @@
 :root {
   --primary-color: #60a5fa;
 }
+a,
+a:hover {
+  text-decoration: none;
+}
 body {
   font-family: "Source Sans Pro", sans-serif;
 }
@@ -9,6 +13,14 @@ body {
 }
 .bg-primary {
   background-color: var(--primary-color) !important;
+}
+.bg-home {
+  background-image: linear-gradient(
+    to top,
+    #1e3c72 0%,
+    #1e3c72 1%,
+    #2a5298 100%
+  );
 }
 .button-primary {
   background-color: var(--primary-color);
@@ -79,4 +91,31 @@ body {
   .sidenav a {
     font-size: 18px;
   }
+}
+
+.particle-bg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  z-index: 0 !important;
+}
+.d-relative {
+  position: relative;
+}
+.z-100 {
+  z-index: 100 !important;
+}
+header {
+  position: absolute;
+  top: 0%;
+  height: 50px;
+  width: 100%;
+  background: #fff;
+}
+.display-6 {
+  font-size: 2rem;
+  font-weight: 200;
+}
+.spaced {
+  letter-spacing: 8px;
 }
