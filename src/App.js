@@ -7,7 +7,9 @@ import UserDash from "./App/Pages/User/UserDash";
 import DoctorLogin from "./App/Pages/Doctor/DoctorLogin";
 import DoctorSignup from "./App/Pages/Doctor/DoctorSignup";
 import DoctorDash from "./App/Pages/Doctor/DoctorDash";
+import { ToastContainer, toast } from "react-toastify";
 
+toast.configure();
 function App() {
   return (
     <div className="App">

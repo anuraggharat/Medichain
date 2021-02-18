@@ -25,7 +25,7 @@ export default function DoctorDash() {
         <div className="container bg-light">
           <div className="container ">
             <div className="row p-3 bg-white mb-3">
-              <h3>User Dashboard</h3>
+              <h3>Doctor Dashboard</h3>
             </div>
             <div className="row">
               <div className="col-lg-6 col-sm-12">
