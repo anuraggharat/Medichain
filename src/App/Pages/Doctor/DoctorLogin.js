@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import DoctorAvatar from "../../Assets/doctor.svg";
 import SideComponent from "../../Components/SideComponent";
 export default function DoctorLogin() {
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const { email, password } = values;
+
+  //handleChange function to set input values
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  console.log("====================================");
+  console.log(email);
+  console.log("====================================");
+  //value submission function
+  const submitValues = (e) => {
+    e.preventDefault();
+    console.log("Submittted values", values);
+  };
+
+  console.log("====================================");
+  console.log(password);
+  console.log("====================================");
+
   return (
     <div className="container-fluid min-vh-100 ">
       <div className="row">
@@ -24,13 +50,19 @@ export default function DoctorLogin() {
                   Signup.
                 </Link>
               </p>
-              <form className="border-top pt-4">
+              <form
+                className="border-top pt-4"
+                onSubmit={(e) => submitValues(e)}
+              >
                 <div className="mb-4 ">
                   <input
                     type="email"
                     className="form-control border-0 bg-light rounded "
                     id="email"
                     placeholder="Email"
+                    name="email"
+                    value={email}
+                    onChange={(e) => handleChange(e)}
                   />
                 </div>
                 <div className="mb-4">
@@ -39,6 +71,9 @@ export default function DoctorLogin() {
                     className="border-0 bg-light form-control"
                     id="password"
                     placeholder="Password"
+                    name="password"
+                    value={password}
+                    onChange={(e) => handleChange(e)}
                   />
                 </div>
 
