@@ -80,7 +80,7 @@ export default function UserSignup() {
                   />
                 </div>
                 <div className="row mb-4">
-                  <div className="col-lg-4">
+                  <div className="col-lg-4 ">
                     <input
                       type="text"
                       className="form-control border-0 bg-light rounded "
@@ -91,7 +91,7 @@ export default function UserSignup() {
                       onChange={(e) => handleChange(e)}
                     />
                   </div>
-                  <div className="col-lg-4">
+                  <div className="col-lg-4  mt-sm-3">
                     <input
                       type="number"
                       className="form-control border-0 bg-light rounded "
@@ -102,7 +102,7 @@ export default function UserSignup() {
                       onChange={(e) => handleChange(e)}
                     />
                   </div>
-                  <div className="col-lg-4">
+                  <div className="col-lg-4  mt-sm-3">
                     <input
                       type="text"
                       className="form-control border-0 bg-light rounded "
