@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { registerUser } from "../../Redux/Actions/user";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
+import Loader from "../../Components/Loader";
 
 function UserSignup({ isLoggedIn, registerUser, loading }) {
   const [values, setValues] = useState({
@@ -146,13 +147,16 @@ function UserSignup({ isLoggedIn, registerUser, loading }) {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="btn w-25 rounded button-primary mx-auto"
-                  disabled={loading}
-                >
-                  Submit
-                </button>
+                {!loading && (
+                  <button
+                    type="submit"
+                    className="btn w-25 rounded button-primary mx-auto"
+                    disabled={loading}
+                  >
+                    Submit
+                  </button>
+                )}
+                {loading && <Loader />}
               </form>
             </div>
           </div>
