@@ -9,7 +9,9 @@ export default function SideBar(props) {
         &times;
       </a>
       <Link>Profile</Link>
-      <Link>Logout</Link>
+      <a className="link" href="#" onClick={() => props.logoutUser()}>
+        Logout
+      </a>
     </div>
   );
 }

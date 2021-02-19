@@ -12,10 +12,8 @@ export default function Navbar(props) {
         <HiMenuAlt1 className="text-dark" />
       </button>
       <h3 className="font-weight-bold">MEDICHAIN</h3>
-      <div class="navbar-nav ">
-        <a class="nav-link active" href="#">
-          Anurag Gharat
-        </a>
+      <div className="navbar-nav ">
+        <h5 className="nav-link active">{props.name}</h5>
       </div>
     </nav>
   );

@@ -3,22 +3,30 @@ import Navbar from "../../Components/Navbar";
 import SideBar from "../../Components/SideBar";
 import { BsFileEarmarkPlus, BsFileText } from "react-icons/bs";
 import { BiUserCircle } from "react-icons/bi";
+import { logoutUser } from "../../Redux/Actions/user";
+import { connect } from "react-redux";
+import { toast } from "react-toastify";
+import Loader from "../../Components/Loader";
+import { Redirect } from "react-router-dom";
 
-export default function UserDash() {
+function UserDash({ user, logoutUser, isLoggedIn }) {
   const [toggled, setToggled] = useState(true);
-
+  console.log(isLoggedIn);
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
   };
   const closeNav = () => {
-    console.log("Hitted");
     document.getElementById("mySidenav").style.width = "0";
   };
 
+  if (!isLoggedIn) {
+    return <Redirect to="/user/login" />;
+  }
+  console.log(user.name);
   return (
     <div className="w-100 min-vh-100 bg-light">
-      <SideBar closenav={closeNav} />
-      <Navbar sidebarToggler={openNav} />
+      <SideBar closenav={closeNav} logoutUser={logoutUser} />
+      <Navbar sidebarToggler={openNav} name={user.name} />
 
       <div id="main">
         <div className="container bg-light">
@@ -135,3 +143,8 @@ export default function UserDash() {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.user.isLoggedIn,
+  user: state.user.user,
+});
+export default connect(mapStateToProps, { logoutUser })(UserDash);

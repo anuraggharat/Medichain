@@ -35,10 +35,8 @@ function UserLogin({ loginUser, user, isLoggedIn }) {
       .then(async (res) => {
         if (res.success) {
           await toast.success(res.message);
-          setLoading(false);
         } else {
           toast.error(res.error);
-          setLoading(false);
         }
       })
       .catch((err) => toast.warning(err));

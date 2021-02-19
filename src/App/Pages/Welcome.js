@@ -4,10 +4,6 @@ import Particles from "react-particles-js";
 import api from "../utils/api";
 
 export default function Welcome() {
-  useEffect(() => {
-    api.get("/posts").then((res) => console.log(res));
-  }, []);
-
   return (
     <div className="w-100 min-vh-100 bg-home d-relative d-flex justify-content-center flex-column text-center">
       <header className="d-flex justify-content-between align-items-center z-100">
