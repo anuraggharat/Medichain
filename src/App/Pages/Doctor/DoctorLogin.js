@@ -1,33 +1,49 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import DoctorAvatar from "../../Assets/doctor.svg";
 import SideComponent from "../../Components/SideComponent";
-export default function DoctorLogin() {
+import { loginUser } from "../../Redux/Actions/doctor";
+import { connect } from "react-redux";
+import { toast } from "react-toastify";
+import Loader from "../../Components/Loader";
+
+function DoctorLogin({ loginUser, user, isLoggedIn }) {
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const { email, password } = values;
 
   //handleChange function to set input values
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-
-  console.log("====================================");
-  console.log(email);
-  console.log("====================================");
+  console.log(isLoggedIn);
   //value submission function
-  const submitValues = (e) => {
+  const submitValues = async (e) => {
+    await setLoading(true);
     e.preventDefault();
-    console.log("Submittted values", values);
+    if (!email && !password) {
+      toast.error("Values can't be empty");
+      setLoading(false);
+      return;
+    }
+    await loginUser(values)
+      .then(async (res) => {
+        if (res.success) {
+          await toast.success(res.message);
+        } else {
+          toast.error(res.error);
+        }
+      })
+      .catch((err) => toast.warning(err));
+    setLoading(false);
   };
 
-  console.log("====================================");
-  console.log(password);
-  console.log("====================================");
+  if (isLoggedIn) {
+    return <Redirect to="/doctor/dash" />;
+  }
 
   return (
     <div className="container-fluid min-vh-100 ">
@@ -77,12 +93,16 @@ export default function DoctorLogin() {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="btn w-25 rounded button-primary mx-auto"
-                >
-                  Submit
-                </button>
+                {!loading && (
+                  <button
+                    type="submit"
+                    className="btn w-25 rounded button-primary mx-auto"
+                    disabled={loading}
+                  >
+                    Submit
+                  </button>
+                )}
+                {loading && <Loader />}
               </form>
             </div>
           </div>
@@ -91,3 +111,8 @@ export default function DoctorLogin() {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.doctor.isLoggedIn,
+  user: state.doctor.user,
+});
+export default connect(mapStateToProps, { loginUser })(DoctorLogin);

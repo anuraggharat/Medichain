@@ -42,8 +42,7 @@ function UserLogin({ loginUser, user, isLoggedIn }) {
       .catch((err) => toast.warning(err));
     setLoading(false);
   };
-  console.log(user);
-  console.log(localStorage.getItem("token"));
+
   //loading web3 token
   const loadWeb3 = async () => {
     console.log(window.ethereum);
