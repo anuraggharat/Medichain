@@ -8,26 +8,30 @@ import DoctorLogin from "./App/Pages/Doctor/DoctorLogin";
 import DoctorSignup from "./App/Pages/Doctor/DoctorSignup";
 import DoctorDash from "./App/Pages/Doctor/DoctorDash";
 import { ToastContainer, toast } from "react-toastify";
+import { Provider } from "react-redux";
+import store from "./App/Redux/store";
 
 toast.configure();
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Switch>
-          <Route path="/" exact component={Welcome} />
-          {/* User routes */}
-          <Route path="/user/login" component={UserLogin} />
-          <Route path="/user/signup" component={UserSignup} />
-          <Route path="/user/:slug" component={UserDash} />
-          {/* Healthcare worker routes */}
-          <Route path="/doctor/login" component={DoctorLogin} />
-          <Route path="/doctor/signup" component={DoctorSignup} />
-          <Route path="/doctor/:slug" component={DoctorDash} />
+      <Provider store={store}>
+        <Router>
+          <Switch>
+            <Route path="/" exact component={Welcome} />
+            {/* User routes */}
+            <Route path="/user/login" component={UserLogin} />
+            <Route path="/user/signup" component={UserSignup} />
+            <Route path="/user/:slug" component={UserDash} />
+            {/* Healthcare worker routes */}
+            <Route path="/doctor/login" component={DoctorLogin} />
+            <Route path="/doctor/signup" component={DoctorSignup} />
+            <Route path="/doctor/:slug" component={DoctorDash} />
 
-          <Route path="*" component={Error404} />
-        </Switch>
-      </Router>
+            <Route path="*" component={Error404} />
+          </Switch>
+        </Router>
+      </Provider>
     </div>
   );
 }

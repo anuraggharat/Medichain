@@ -1,23 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Particles from "react-particles-js";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import api from "../utils/api";
 
 export default function Welcome() {
-  const notify = () => toast("Wow so easy !");
+  useEffect(() => {
+    api.get("/posts").then((res) => console.log(res));
+  }, []);
+
   return (
     <div className="w-100 min-vh-100 bg-home d-relative d-flex justify-content-center flex-column text-center">
       <header className="d-flex justify-content-between align-items-center z-100">
         <h3 className="ml-5">MEDICHAIN</h3>
         <div className="d-flex align-items-center">
-          <Link to="/user/login" className="active mx-5">
+          <Link to="/user/login" className="active ">
             Login as Patient
           </Link>
-          <Link to="/user/login" className="active mx-5">
+          <Link to="/doctor/login" className="active mx-5">
             Login as Doctor
           </Link>
-          <button onClick={notify}>Notify !</button>
         </div>
       </header>
       <Particles
@@ -78,7 +79,6 @@ export default function Welcome() {
           storing and managing Medical records!
         </p>
       </div>
-      <ToastContainer />
     </div>
   );
 }

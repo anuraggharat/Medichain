@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import SideComponent from "../../Components/SideComponent";
 import UserAvatar from "../../Assets/man.svg";
 import { Link } from "react-router-dom";
+import { registerUser } from "../../Redux/Actions/user";
+import { connect } from "react-redux";
 
-export default function UserSignup() {
+function UserSignup({ isLoggedIn, registerUser }) {
   const [values, setValues] = useState({
     name: "",
     number: "",
@@ -21,12 +23,14 @@ export default function UserSignup() {
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+  console.log(isLoggedIn);
 
   //value submission function
-  const submitValues = (e) => {
+  const submitValues = async (e) => {
     setLoading(true);
     e.preventDefault();
     console.log("Submittted values", values);
+    registerUser(values);
   };
 
   return (
@@ -148,3 +152,8 @@ export default function UserSignup() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.user.isLoggedIn,
+});
+export default connect(mapStateToProps, { registerUser })(UserSignup);
