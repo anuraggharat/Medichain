@@ -4,33 +4,49 @@ import UserAvatar from "../../Assets/man.svg";
 import { Link } from "react-router-dom";
 import { registerUser } from "../../Redux/Actions/user";
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 
-function UserSignup({ isLoggedIn, registerUser }) {
+function UserSignup({ isLoggedIn, registerUser, loading }) {
   const [values, setValues] = useState({
     name: "",
-    number: "",
+    phoneno: "",
     gender: "",
     age: "",
     city: "",
     email: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
+
   const [error, setError] = useState("");
-  const { email, password, name, number, gender, age, city } = values;
+  const { email, password, name, phoneno, gender, age, city } = values;
 
   //handleChange function to set input values
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-  console.log(isLoggedIn);
 
   //value submission function
   const submitValues = async (e) => {
-    setLoading(true);
     e.preventDefault();
     console.log("Submittted values", values);
-    registerUser(values);
+    registerUser(values)
+      .then((res) => {
+        if (res.success) {
+          toast.success(res.message);
+        } else {
+          toast.error(res.error);
+        }
+      })
+      .catch((err) => toast.warning("Please try again!"));
+    setValues({
+      name: "",
+      phoneno: "",
+      gender: "",
+      age: "",
+      city: "",
+      email: "",
+      password: "",
+    });
   };
 
   return (
@@ -67,12 +83,12 @@ function UserSignup({ isLoggedIn, registerUser }) {
                     className="form-control border-0 bg-light rounded "
                     id="phoneno"
                     placeholder="Your Phone number"
-                    name="number"
-                    value={number}
+                    name="phoneno"
+                    value={phoneno}
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
-                <div className="mb-4 ">
+                <div className="">
                   <input
                     type="email"
                     className="form-control border-0 bg-light rounded "
@@ -84,7 +100,7 @@ function UserSignup({ isLoggedIn, registerUser }) {
                   />
                 </div>
                 <div className="row mb-4">
-                  <div className="col-lg-4 ">
+                  <div className="col-lg-4 mt-3">
                     <input
                       type="text"
                       className="form-control border-0 bg-light rounded "
@@ -95,7 +111,7 @@ function UserSignup({ isLoggedIn, registerUser }) {
                       onChange={(e) => handleChange(e)}
                     />
                   </div>
-                  <div className="col-lg-4  mt-sm-3">
+                  <div className="col-lg-4 mt-3">
                     <input
                       type="number"
                       className="form-control border-0 bg-light rounded "
@@ -106,7 +122,7 @@ function UserSignup({ isLoggedIn, registerUser }) {
                       onChange={(e) => handleChange(e)}
                     />
                   </div>
-                  <div className="col-lg-4  mt-sm-3">
+                  <div className="col-lg-4  mt-3">
                     <input
                       type="text"
                       className="form-control border-0 bg-light rounded "
@@ -133,6 +149,7 @@ function UserSignup({ isLoggedIn, registerUser }) {
                 <button
                   type="submit"
                   className="btn w-25 rounded button-primary mx-auto"
+                  disabled={loading}
                 >
                   Submit
                 </button>
@@ -155,5 +172,6 @@ function UserSignup({ isLoggedIn, registerUser }) {
 
 const mapStateToProps = (state) => ({
   isLoggedIn: state.user.isLoggedIn,
+  loading: state.user.loading,
 });
 export default connect(mapStateToProps, { registerUser })(UserSignup);

@@ -13,32 +13,33 @@ export const registerUser = (user) => async (dispatch) => {
   console.log(user);
   const body = JSON.stringify(user);
   console.log(body);
-  // dispatch({
-  //   type: SET_LOADING,
-  // });
+  dispatch({
+    type: SET_LOADING,
+  });
 
-  // try {
-  //   const res = await api.post("/user/register", body);
-  //   console.log("response at req", res);
-  //   if (res.success) {
-  //     dispatch({
-  //       type: REGISTER_SUCCESS,
-  //       payload: res.data,
-  //     });
-  //   } else {
-  //     console.log(res);
-  //     dispatch({
-  //       type: REGISTER_FAIL,
-  //       payload: "Something went wrong!",
-  //     });
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  //   dispatch({
-  //     type: REGISTER_FAIL,
-  //     payload: "Something went wrong!",
-  //   });
-  // }
+  try {
+    const res = await api.post("/user/register", body);
+    console.log("response at req", res);
+    if (res.success) {
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: res.data,
+      });
+    } else {
+      console.log(res.data);
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: "Something went wrong!",
+      });
+      return res.data;
+    }
+  } catch (error) {
+    console.log("returned :", error);
+    dispatch({
+      type: REGISTER_FAIL,
+      payload: "Something went wrong!",
+    });
+  }
 };
 
 //user login
