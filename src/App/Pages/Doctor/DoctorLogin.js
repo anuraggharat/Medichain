@@ -24,11 +24,7 @@ function DoctorLogin({ loginUser, user, isLoggedIn }) {
   const submitValues = async (e) => {
     await setLoading(true);
     e.preventDefault();
-    if (!email && !password) {
-      toast.error("Values can't be empty");
-      setLoading(false);
-      return;
-    }
+
     await loginUser(values)
       .then(async (res) => {
         if (res.success) {
