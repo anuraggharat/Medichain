@@ -8,39 +8,42 @@ import {
 } from "../Actions/types";
 import api from "../../utils/api";
 
-//user register
+//doctor register
 export const registerUser = (user) => async (dispatch) => {
+  console.log(user);
   const body = JSON.stringify(user);
   console.log(body);
-  // dispatch({
-  //   type: SET_LOADING,
-  // });
+  dispatch({
+    type: SET_LOADING,
+  });
 
-  // try {
-  //   const res = await api.post("/user/register", body);
-  //   console.log("response at req", res);
-  //   if (res.success) {
-  //     dispatch({
-  //       type: REGISTER_SUCCESS,
-  //       payload: res.data,
-  //     });
-  //   } else {
-  //     console.log(res);
-  //     dispatch({
-  //       type: REGISTER_FAIL,
-  //       payload: "Something went wrong!",
-  //     });
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  //   dispatch({
-  //     type: REGISTER_FAIL,
-  //     payload: "Something went wrong!",
-  //   });
-  // }
+  try {
+    const res = await api.post("/doctor/register", body);
+    console.log("response at req", res);
+    if (res.data.success) {
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: res.data,
+      });
+      return res.data;
+    } else {
+      console.log(res.data);
+      dispatch({
+        type: REGISTER_FAIL,
+        payload: "Something went wrong!",
+      });
+      return res.data;
+    }
+  } catch (error) {
+    console.log("returned :", error);
+    dispatch({
+      type: REGISTER_FAIL,
+      payload: "Something went wrong!",
+    });
+  }
 };
 
-//user login
+//doctor login
 export const loginUser = (user) => async (dispatch) => {
   const body = JSON.stringify(user);
   dispatch({
@@ -48,23 +51,24 @@ export const loginUser = (user) => async (dispatch) => {
   });
 
   try {
-    const res = await api.post("/user/login", body);
+    const res = await api.post("/doctor/login", body);
     console.log("response at req", res);
-    if (res.success) {
+    if (res.data.success) {
       localStorage.setItem("token", res.data.token);
-      console.log(res.data);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
+      return res.data;
     } else {
       dispatch({
         type: LOGIN_FAIL,
-        payload: res.msg,
+        payload: res.data.error,
       });
+      return res.data;
     }
   } catch (error) {
-    console.log(error);
+    console.log("error in catch", error);
     dispatch({
       type: LOGIN_FAIL,
       payload: "Something went wrong!",
@@ -72,7 +76,7 @@ export const loginUser = (user) => async (dispatch) => {
   }
 };
 
-//logout user
+//doctor user
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("token");
   dispatch({

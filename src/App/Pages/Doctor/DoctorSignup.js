@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import SideComponent from "../../Components/SideComponent";
 import DoctorAvatar from "../../Assets/doctor.svg";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { registerUser } from "../../Redux/Actions/doctor";
+import { connect } from "react-redux";
+import { toast } from "react-toastify";
+import Loader from "../../Components/Loader";
 
-export default function DoctorSignup() {
+function DoctorSignup({ isLoggedIn, registerUser }) {
   const [values, setValues] = useState({
     name: "",
-    number: "",
+    phoneno: "",
     gender: "",
     specialization: "",
     age: "",
@@ -17,11 +21,13 @@ export default function DoctorSignup() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [redirect, setRedirect] = useState(false);
+
   const {
     email,
     password,
     name,
-    number,
+    phoneno,
     gender,
     age,
     city,
@@ -34,11 +40,28 @@ export default function DoctorSignup() {
   };
 
   //value submission function
-  const submitValues = (e) => {
+  const submitValues = async (e) => {
     setLoading(true);
     e.preventDefault();
-    console.log("Submittted values", values);
+
+    registerUser(values)
+      .then(async (res) => {
+        console.log(res);
+        if (res.success) {
+          toast.success(res.message);
+          toast.info("Login with credentials");
+          setRedirect(true);
+        } else {
+          toast.error(res.error);
+        }
+      })
+      .catch((err) => toast.warning("Please try again!"));
+    setLoading(false);
   };
+
+  if (redirect) {
+    return <Redirect to="/doctor/login" />;
+  }
   return (
     <div className="container-fluid min-vh-100 ">
       <div className="row  ">
@@ -73,8 +96,8 @@ export default function DoctorSignup() {
                     className="form-control border-0 bg-light rounded "
                     id="phoneno"
                     placeholder="Phone number"
-                    name="number"
-                    value={number}
+                    name="phoneno"
+                    value={phoneno}
                     onChange={(e) => handleChange(e)}
                   />
                 </div>
@@ -147,12 +170,16 @@ export default function DoctorSignup() {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="btn w-25 rounded button-primary mx-auto"
-                >
-                  Submit
-                </button>
+                {!loading && (
+                  <button
+                    type="submit"
+                    className="btn w-25 rounded button-primary mx-auto"
+                    disabled={loading}
+                  >
+                    Submit
+                  </button>
+                )}
+                {loading && <Loader />}
               </form>
             </div>
           </div>
@@ -169,3 +196,7 @@ export default function DoctorSignup() {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.doctor.isLoggedIn,
+});
+export default connect(mapStateToProps, { registerUser })(DoctorSignup);

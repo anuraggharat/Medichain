@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SideComponent from "../../Components/SideComponent";
 import UserAvatar from "../../Assets/man.svg";
 import { Link, Redirect } from "react-router-dom";
