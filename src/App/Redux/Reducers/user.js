@@ -48,7 +48,8 @@ export default function (state = initialState, action) {
     case LOGIN_FAIL:
       return {
         ...state,
-        error: payload.message,
+        user: null,
+        error: payload,
         loading: false,
         isLoggedIn: false,
       };

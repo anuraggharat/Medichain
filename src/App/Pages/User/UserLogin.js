@@ -27,10 +27,12 @@ function UserLogin({ loginUser, user, isLoggedIn }) {
   const submitValues = async (e) => {
     await setLoading(true);
     e.preventDefault();
-    console.log("Submittted values", values);
+    if (!email && !password) {
+      toast.error("Values can't be empty");
+      return;
+    }
     await loginUser(values)
       .then(async (res) => {
-        console.log("User login", res);
         if (res.success) {
           await toast.success(res.message);
           setLoading(false);
@@ -40,6 +42,7 @@ function UserLogin({ loginUser, user, isLoggedIn }) {
         }
       })
       .catch((err) => toast.warning(err));
+    setLoading(false);
   };
   console.log(user);
   console.log(localStorage.getItem("token"));
@@ -68,9 +71,6 @@ function UserLogin({ loginUser, user, isLoggedIn }) {
   if (isLoggedIn) {
     return <Redirect to="/user/dash" />;
   }
-  console.log("====================================");
-  console.log(isLoggedIn);
-  console.log("====================================");
 
   return (
     <div className="container-fluid min-vh-100 ">
@@ -120,12 +120,16 @@ function UserLogin({ loginUser, user, isLoggedIn }) {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="btn w-25 rounded button-primary mx-auto"
-                >
-                  Submit
-                </button>
+                {!loading && (
+                  <button
+                    type="submit"
+                    className="btn w-25 rounded button-primary mx-auto"
+                    disabled={loading}
+                  >
+                    Submit
+                  </button>
+                )}
+                {loading && <Loader />}
               </form>
             </div>
           </div>

@@ -54,7 +54,6 @@ export const loginUser = (user) => async (dispatch) => {
     console.log("response at req", res);
     if (res.data.success) {
       localStorage.setItem("token", res.data.token);
-      console.log("Inside success", res.data);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
@@ -63,12 +62,12 @@ export const loginUser = (user) => async (dispatch) => {
     } else {
       dispatch({
         type: LOGIN_FAIL,
-        payload: res.msg,
+        payload: res.data.error,
       });
       return res.data;
     }
   } catch (error) {
-    console.log(error);
+    console.log("error in catch", error);
     dispatch({
       type: LOGIN_FAIL,
       payload: "Something went wrong!",
