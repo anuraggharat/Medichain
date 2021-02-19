@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import SideComponent from "../../Components/SideComponent";
 import UserAvatar from "../../Assets/man.svg";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { registerUser } from "../../Redux/Actions/user";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../../Components/Loader";
 
-function UserSignup({ isLoggedIn, registerUser, loading }) {
+function UserSignup({ isLoggedIn, registerUser }) {
   const [values, setValues] = useState({
     name: "",
     phoneno: "",
@@ -18,9 +18,9 @@ function UserSignup({ isLoggedIn, registerUser, loading }) {
     password: "",
   });
 
-  const [error, setError] = useState("");
+  const [redirect, setRedirect] = useState(false);
   const { email, password, name, phoneno, gender, age, city } = values;
-
+  const [loading, setLoading] = useState(false);
   //handleChange function to set input values
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -28,27 +28,27 @@ function UserSignup({ isLoggedIn, registerUser, loading }) {
 
   //value submission function
   const submitValues = async (e) => {
+    setLoading(true);
     e.preventDefault();
-    console.log("Submittted values", values);
+
     registerUser(values)
-      .then((res) => {
+      .then(async (res) => {
         if (res.success) {
-          toast.success(res.message);
+          await toast.success(res.message);
+          await toast("Redirecting to Login!");
+          setRedirect(true);
+          setLoading(false);
         } else {
           toast.error(res.error);
+          setLoading(false);
         }
       })
       .catch((err) => toast.warning("Please try again!"));
-    setValues({
-      name: "",
-      phoneno: "",
-      gender: "",
-      age: "",
-      city: "",
-      email: "",
-      password: "",
-    });
   };
+
+  if (redirect) {
+    return <Redirect to="/user/login" />;
+  }
 
   return (
     <div className="container-fluid min-vh-100 ">
@@ -176,6 +176,5 @@ function UserSignup({ isLoggedIn, registerUser, loading }) {
 
 const mapStateToProps = (state) => ({
   isLoggedIn: state.user.isLoggedIn,
-  loading: state.user.loading,
 });
 export default connect(mapStateToProps, { registerUser })(UserSignup);
