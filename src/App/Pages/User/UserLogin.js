@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import UserAvatar from "../../Assets/man.svg";
 import SideComponent from "../../Components/SideComponent";
 import Web3 from "web3";
-import { ToastContainer, toast } from "react-toastify";
+import { loginUser } from "../../Redux/Actions/user";
+import { connect } from "react-redux";
+import { toast } from "react-toastify";
+import Loader from "../../Components/Loader";
 
-export default function UserLogin() {
+function UserLogin({ loginUser, user, isLoggedIn }) {
   const [account, setAccount] = useState();
   const [values, setValues] = useState({
     email: "",
@@ -20,19 +23,26 @@ export default function UserLogin() {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  console.log("====================================");
-  console.log(email);
-  console.log("====================================");
   //value submission function
-  const submitValues = (e) => {
+  const submitValues = async (e) => {
+    await setLoading(true);
     e.preventDefault();
     console.log("Submittted values", values);
+    await loginUser(values)
+      .then(async (res) => {
+        console.log("User login", res);
+        if (res.success) {
+          await toast.success(res.message);
+          setLoading(false);
+        } else {
+          toast.error(res.error);
+          setLoading(false);
+        }
+      })
+      .catch((err) => toast.warning(err));
   };
-
-  console.log("====================================");
-  console.log(password);
-  console.log("====================================");
-
+  console.log(user);
+  console.log(localStorage.getItem("token"));
   //loading web3 token
   const loadWeb3 = async () => {
     console.log(window.ethereum);
@@ -51,9 +61,16 @@ export default function UserLogin() {
   };
 
   //useeffect hook to trigger web3
-  useEffect(() => {
-    loadWeb3();
-  }, []);
+  // useEffect(() => {
+  //   loadWeb3();
+  // }, []);
+
+  if (isLoggedIn) {
+    return <Redirect to="/user/dash" />;
+  }
+  console.log("====================================");
+  console.log(isLoggedIn);
+  console.log("====================================");
 
   return (
     <div className="container-fluid min-vh-100 ">
@@ -117,3 +134,8 @@ export default function UserLogin() {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.user.isLoggedIn,
+  user: state.user.user,
+});
+export default connect(mapStateToProps, { loginUser })(UserLogin);

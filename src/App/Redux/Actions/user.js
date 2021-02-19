@@ -20,7 +20,7 @@ export const registerUser = (user) => async (dispatch) => {
   try {
     const res = await api.post("/user/register", body);
     console.log("response at req", res);
-    if (res.success) {
+    if (res.data.success) {
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
@@ -52,18 +52,20 @@ export const loginUser = (user) => async (dispatch) => {
   try {
     const res = await api.post("/user/login", body);
     console.log("response at req", res);
-    if (res.success) {
+    if (res.data.success) {
       localStorage.setItem("token", res.data.token);
-      console.log(res.data);
+      console.log("Inside success", res.data);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
+      return res.data;
     } else {
       dispatch({
         type: LOGIN_FAIL,
         payload: res.msg,
       });
+      return res.data;
     }
   } catch (error) {
     console.log(error);
