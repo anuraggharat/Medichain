@@ -9,3 +9,11 @@ export const getDoctors = async () => {
     return { success: false, error: "Unable to fetch  data" };
   }
 };
+export const getPatients = async () => {
+  try {
+    const res = await api.get("/user/getusers");
+    return res.data;
+  } catch (error) {
+    return { success: false, error: "Unable to fetch  data" };
+  }
+};

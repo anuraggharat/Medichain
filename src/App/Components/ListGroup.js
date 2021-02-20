@@ -6,7 +6,9 @@ export default function ListGroup({ item }) {
       <div className="row ">
         <div className="col-lg-4">
           <p className="my-auto text-dark font-weight-regular">{item.name}</p>
-          <p className="text-muted my-auto ">{item.specialization}</p>
+          {item.specialization && (
+            <p className="text-muted my-auto ">{item.specialization}</p>
+          )}
         </div>
         <div className="col-lg-3">
           <p className="my-auto text-dark">{item.email}</p>

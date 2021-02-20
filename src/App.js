@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { Provider } from "react-redux";
 import store from "./App/Redux/store";
 import DoctorList from "./App/Pages/User/DoctorList";
+import PatientList from "./App/Pages/Doctor/PatientList";
 
 toast.configure();
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <Route path="/doctor/login" component={DoctorLogin} />
             <Route path="/doctor/signup" component={DoctorSignup} />
             <Route path="/doctor/dash" component={DoctorDash} />
+            <Route path="/doctor/availablepatients" component={PatientList} />
 
             <Route path="*" component={Error404} />
           </Switch>

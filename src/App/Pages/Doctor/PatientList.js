@@ -8,10 +8,10 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../../Components/Loader";
 import { Link, Redirect } from "react-router-dom";
-import { getDoctors } from "../../utils/getRequests";
+import { getPatients } from "../../utils/getRequests";
 import ListGroup from "../../Components/ListGroup";
 
-export default function DoctorList() {
+export default function PatientList() {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -23,13 +23,13 @@ export default function DoctorList() {
   };
 
   const fetchData = async () => {
-    getDoctors()
+    getPatients()
       .then((res) => {
         console.log(res);
         if (res.success) {
           setData(res.data);
           setCount(res.count);
-          toast.success("List of all available doctors!");
+          toast.success("List of all available users!");
         } else {
           toast.warning("Unable to show data");
         }
@@ -46,10 +46,11 @@ export default function DoctorList() {
     <div className="min-vh-100 w-100 bg-light">
       <SideBar closenav={closeNav} logoutUser={logoutUser} />
       <Navbar sidebarToggler={openNav} name={"Anurag"} />
-      <div className="container mt-5 p-0">
+      <div className="container d-flex justify-content-between mt-5 p-0">
         <Link to="/user/dash" className="link">
           Go back Home
         </Link>
+        <p>Displaying {count} records</p>
       </div>
       <div className="container mt-3">
         <div className="row">
