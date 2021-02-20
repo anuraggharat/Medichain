@@ -7,8 +7,16 @@ export default function SideBar(props) {
       <a className="closebtn" onClick={() => props.closenav()}>
         &times;
       </a>
-      <Link to="/doctor/dash">Profile</Link>
-      <Link to="/user/availabledoctors">Doctors</Link>
+      {props.doctor ? (
+        <Link to="/doctor/dash">Profile</Link>
+      ) : (
+        <Link to="/doctor/dash">Profile</Link>
+      )}
+      {props.doctor ? (
+        <Link to="/doctor/availablepatients">Patients</Link>
+      ) : (
+        <Link to="/user/availabledoctors">Doctors</Link>
+      )}
 
       <a className="link" href="#" onClick={() => props.logoutUser()}>
         Logout

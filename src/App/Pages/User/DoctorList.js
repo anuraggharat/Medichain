@@ -46,6 +46,8 @@ function DoctorList({ isLoggedIn, logoutUser }) {
     fetchData();
   }, []);
 
+  console.log(isLoggedIn);
+
   if (!isLoggedIn) {
     return <Redirect to="/user/login" />;
   }
@@ -96,4 +98,4 @@ const mapStateToProps = (state) => ({
   isLoggedIn: state.user.isLoggedIn,
   user: state.user.user,
 });
-export default connect()(DoctorList);
+export default connect(mapStateToProps)(DoctorList);
