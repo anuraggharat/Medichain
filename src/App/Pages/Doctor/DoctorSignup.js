@@ -125,15 +125,16 @@ function DoctorSignup({ isLoggedIn, registerUser }) {
                 </div>
                 <div className="row mb-4">
                   <div className="col-lg-4">
-                    <input
-                      type="text"
-                      className="form-control border-0 bg-light rounded "
-                      id="gender"
-                      placeholder="gender"
-                      name="gender"
-                      value={gender}
+                    <select
+                      className="form-control border-0 bg-light"
                       onChange={(e) => handleChange(e)}
-                    />
+                      name="gender"
+                    >
+                      <option defaultValue={gender}>Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
                   </div>
                   <div className="col-lg-4 mt-sm-3">
                     <input
