@@ -19,14 +19,14 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
     document.getElementById("mySidenav").style.width = "0";
   };
 
-  if (!isLoggedIn) {
-    return <Redirect to="/user/login" />;
-  }
-  console.log(user.name);
+  // if (!isLoggedIn) {
+  //   return <Redirect to="/user/login" />;
+  // }
+
   return (
     <div className="w-100 min-vh-100 bg-light">
       <SideBar closenav={closeNav} logoutUser={logoutUser} />
-      <Navbar sidebarToggler={openNav} name={user.name} />
+      <Navbar sidebarToggler={openNav} name={"Anurag"} />
 
       <div id="main">
         <div className="container bg-light">
