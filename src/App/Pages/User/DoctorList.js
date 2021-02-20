@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../Components/Navbar";
 import SideBar from "../../Components/SideBar";
 import { BsFileEarmarkPlus, BsFileText } from "react-icons/bs";
@@ -8,8 +8,13 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../../Components/Loader";
 import { Redirect } from "react-router-dom";
+import { getDoctors } from "../../utils/getRequests";
+import ListGroup from "../../Components/ListGroup";
 
 export default function DoctorList() {
+  const [data, setData] = useState([]);
+  const [count, setCount] = useState(0);
+  const [loading, setLoading] = useState(true);
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
   };
@@ -17,17 +22,37 @@ export default function DoctorList() {
     document.getElementById("mySidenav").style.width = "0";
   };
 
+  const fetchData = async () => {
+    getDoctors()
+      .then((res) => {
+        console.log(res);
+        if (res.success) {
+          setData(res.data);
+          setCount(res.count);
+          toast.success("List of all available doctors!");
+        } else {
+          toast.warning("Unable to show data");
+        }
+      })
+      .catch((err) => toast.error("Refresh the page!"));
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <div className="min-vh-100 w-100 bg-light">
       <SideBar closenav={closeNav} logoutUser={logoutUser} />
       <Navbar sidebarToggler={openNav} name={"Anurag"} />
       <div className="container mt-5">
         <div className="row">
-          <div class="list-group w-100">
-            <div class="bg-primary text-white list-group-item list-group-item-action ">
+          <div className="list-group w-100">
+            <div className="bg-primary text-white list-group-item list-group-item-action ">
               <div className="row ">
                 <div className="col-lg-4">
-                  <p className="lead my-auto font-weight-normal">NAME</p>
+                  <p className="lead my-auto font-weight-normal">Name</p>
                 </div>
                 <div className="col-lg-3">
                   <p className="lead my-auto font-weight-normal">Email</p>
@@ -35,106 +60,19 @@ export default function DoctorList() {
                 <div className="col-lg-2">
                   <p className="lead my-auto font-weight-normal">Phone</p>
                 </div>
-                <div className="col-lg-3">
+                <div className="col-lg-2">
                   <p className="lead my-auto font-weight-normal">City</p>
                 </div>
-              </div>
-            </div>
-            <div class=" list-group-item list-group-item-action ">
-              <div className="row ">
-                <div className="col-lg-4">
-                  <p className="my-auto text-dark font-weight-regular">
-                    Dr. Anurag Gharat
-                  </p>
-                  <p className="text-muted my-auto ">Sexologist</p>
-                </div>
-                <div className="col-lg-3">
-                  <p className="my-auto text-dark">anuraggharat55@gmail.com</p>
-                </div>
-                <div className="col-lg-2">
-                  <p className="text-dark my-auto">7745050822</p>
-                </div>
-                <div className="col-lg-2 text-wrap">
-                  <p className="text-dark my-auto">Alibag</p>
+
+                <div className="col-lg-1">
+                  <p className="lead my-auto font-weight-normal">Age</p>
                 </div>
               </div>
             </div>
-            <div class=" list-group-item list-group-item-action ">
-              <div className="row ">
-                <div className="col-lg-4">
-                  <p className="my-auto text-dark font-weight-regular">
-                    Dr. Anurag Gharat
-                  </p>
-                  <p className="text-muted my-auto ">Sexologist</p>
-                </div>
-                <div className="col-lg-3">
-                  <p className="my-auto text-dark">anuraggharat55@gmail.com</p>
-                </div>
-                <div className="col-lg-2">
-                  <p className="text-dark my-auto">7745050822</p>
-                </div>
-                <div className="col-lg-2 text-wrap">
-                  <p className="text-dark my-auto">Alibag</p>
-                </div>
-              </div>
-            </div>
-            <div class=" list-group-item list-group-item-action ">
-              <div className="row ">
-                <div className="col-lg-4">
-                  <p className="my-auto text-dark font-weight-regular">
-                    Dr. Anurag Gharat
-                  </p>
-                  <p className="text-muted my-auto ">Sexologist</p>
-                </div>
-                <div className="col-lg-3">
-                  <p className="my-auto text-dark">anuraggharat55@gmail.com</p>
-                </div>
-                <div className="col-lg-2">
-                  <p className="text-dark my-auto">7745050822</p>
-                </div>
-                <div className="col-lg-2 text-wrap">
-                  <p className="text-dark my-auto">Alibag</p>
-                </div>
-              </div>
-            </div>
-            <div class=" list-group-item list-group-item-action ">
-              <div className="row ">
-                <div className="col-lg-4">
-                  <p className="my-auto text-dark font-weight-regular">
-                    Dr. Anurag Gharat
-                  </p>
-                  <p className="text-muted my-auto ">Sexologist</p>
-                </div>
-                <div className="col-lg-3">
-                  <p className="my-auto text-dark">anuraggharat55@gmail.com</p>
-                </div>
-                <div className="col-lg-2">
-                  <p className="text-dark my-auto">7745050822</p>
-                </div>
-                <div className="col-lg-2 text-wrap">
-                  <p className="text-dark my-auto">Alibag</p>
-                </div>
-              </div>
-            </div>
-            <div class=" list-group-item list-group-item-action ">
-              <div className="row ">
-                <div className="col-lg-4">
-                  <p className="my-auto text-dark font-weight-regular">
-                    Dr. Anurag Gharat
-                  </p>
-                  <p className="text-muted my-auto ">Sexologist</p>
-                </div>
-                <div className="col-lg-3">
-                  <p className="my-auto text-dark">anuraggharat55@gmail.com</p>
-                </div>
-                <div className="col-lg-2">
-                  <p className="text-dark my-auto">7745050822</p>
-                </div>
-                <div className="col-lg-2 text-wrap">
-                  <p className="text-dark my-auto">Alibag</p>
-                </div>
-              </div>
-            </div>
+            {loading && <Loader />}
+            {!loading &&
+              data &&
+              data.map((item) => <ListGroup key={item._id} item={item} />)}
           </div>
         </div>
       </div>
