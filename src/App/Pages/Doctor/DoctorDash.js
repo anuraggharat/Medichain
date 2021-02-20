@@ -24,7 +24,7 @@ function DoctorDash({ user, logoutUser, isLoggedIn }) {
 
   return (
     <div className="w-100 min-vh-100 bg-light">
-      <SideBar closenav={closeNav} logoutUser={logoutUser} />
+      <SideBar closenav={closeNav} doctor={false} logoutUser={logoutUser} />
       <Navbar sidebarToggler={openNav} name={user.name} />
 
       <div id="main">

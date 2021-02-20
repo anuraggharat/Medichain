@@ -11,7 +11,7 @@ import { Link, Redirect } from "react-router-dom";
 import { getPatients } from "../../utils/getRequests";
 import ListGroup from "../../Components/ListGroup";
 
-export default function PatientList() {
+function PatientList({ user, logoutUser, isLoggedIn }) {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -23,24 +23,32 @@ export default function PatientList() {
   };
 
   const fetchData = async () => {
-    getPatients()
-      .then((res) => {
-        console.log(res);
-        if (res.success) {
-          setData(res.data);
-          setCount(res.count);
-          toast.success("List of all available users!");
-        } else {
-          toast.warning("Unable to show data");
-        }
-      })
-      .catch((err) => toast.error("Refresh the page!"));
-    setLoading(false);
+    if (isLoggedIn) {
+      getPatients()
+        .then((res) => {
+          console.log(res);
+          if (res.success) {
+            setData(res.data);
+            setCount(res.count);
+            toast.success("List of all available users!");
+          } else {
+            toast.warning("Unable to show data");
+          }
+        })
+        .catch((err) => toast.error("Refresh the page!"));
+      setLoading(false);
+    } else {
+      toast.warning("Login to continue");
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  if (!isLoggedIn) {
+    return <Redirect to="/doctor/login" />;
+  }
 
   return (
     <div className="min-vh-100 w-100 bg-light">
@@ -85,3 +93,8 @@ export default function PatientList() {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.doctor.isLoggedIn,
+  user: state.doctor.user,
+});
+export default connect(mapStateToProps, { logoutUser })(PatientList);
