@@ -39,9 +39,9 @@ function DoctorDash({ user, logoutUser, isLoggedIn }) {
     document.getElementById("mySidenav").style.width = "0";
   };
 
-  // if (!isLoggedIn) {
-  //   return <Redirect to="/doctor/login" />;
-  // }
+  if (!isLoggedIn) {
+    return <Redirect to="/doctor/login" />;
+  }
 
   return (
     <div className="w-100 min-vh-100 bg-light">

@@ -39,6 +39,10 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
     document.getElementById("mySidenav").style.width = "0";
   };
 
+  console.log("====================================");
+  console.log(user);
+  console.log("====================================");
+
   if (!isLoggedIn) {
     return <Redirect to="/user/login" />;
   }
