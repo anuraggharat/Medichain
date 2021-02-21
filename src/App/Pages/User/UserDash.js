@@ -8,6 +8,27 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../../Components/Loader";
 import { Redirect } from "react-router-dom";
+import ModalImage from "react-modal-image";
+import r2 from "../../Assets/r1.jpg";
+
+const images = [
+  {
+    address: r2,
+    title: "Health Report",
+  },
+  {
+    address: r2,
+    title: "Blood Report",
+  },
+  {
+    address: r2,
+    title: "Medical Report",
+  },
+  {
+    address: r2,
+    title: "Covid Report",
+  },
+];
 
 function UserDash({ user, logoutUser, isLoggedIn }) {
   const [toggled, setToggled] = useState(true);
@@ -19,9 +40,9 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
     document.getElementById("mySidenav").style.width = "0";
   };
 
-  if (!isLoggedIn) {
-    return <Redirect to="/user/login" />;
-  }
+  // if (!isLoggedIn) {
+  //   return <Redirect to="/user/login" />;
+  // }
 
   return (
     <div className="w-100 min-vh-100 bg-light">
@@ -44,21 +65,21 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
                     </h3>
                     <div className="border-top mb-3"></div>
 
-                    <ul className="list-group p-0 list-group-flush text-muted">
-                      <li className="list-group-item pl-0">
-                        John Doe Blood Test
-                      </li>
-                      <li className="list-group-item pl-0">John Doe Report</li>
-                      <li className="list-group-item pl-0">
-                        Tony Stark Report
-                      </li>
-                      <li className="list-group-item pl-0">
-                        Jane Foster Checkup
-                      </li>
-                      <li className="list-group-item pl-0">
-                        Jane Foster Report
-                      </li>
-                    </ul>
+                    <div className="row">
+                      {images.map((item, index) => (
+                        <div key={index} className="col-lg-6">
+                          <ModalImage
+                            small={item.address}
+                            medium={item.address}
+                            large={item.address}
+                            alt={item.title}
+                            showRotate={true}
+                            hideZoom={true}
+                            className="w-100 img-fluid"
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
                 <div className="card border-0 mt-3">
