@@ -118,13 +118,18 @@ function UserLogin({ loginUser, user, isLoggedIn }) {
                 </div>
 
                 {!loading && (
-                  <button
-                    type="submit"
-                    className="btn w-25 rounded button-primary mx-auto"
-                    disabled={loading}
-                  >
-                    Submit
-                  </button>
+                  <div className="w-100 d-flex justify-content-between align-items-center">
+                    <button
+                      type="submit"
+                      className="btn w-25 rounded button-primary"
+                      disabled={loading}
+                    >
+                      Submit
+                    </button>
+                    <div className="mb-2">
+                      <Link to="/">Home</Link>
+                    </div>
+                  </div>
                 )}
                 {loading && <Loader />}
               </form>
