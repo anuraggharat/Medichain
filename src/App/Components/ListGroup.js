@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
+import ModalPop from "./ModalPop";
 
 export default function ListGroup({ item }) {
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
   return (
-    <div className=" list-group-item list-group-item-action ">
+    <div
+      className=" list-group-item list-group-item-action "
+      onClick={() => toggle()}
+    >
+      <ModalPop toggle={toggle} modal={modal} item={item} />
       <div className="row ">
         <div className="col-lg-4">
           <p className="my-auto text-dark font-weight-regular">{item.name}</p>

@@ -15,7 +15,7 @@ export default function SideBar(props) {
       {props.doctor ? (
         <Link to="/doctor/profile">Profile</Link>
       ) : (
-        <Link to="/doctor/profile">Profile</Link>
+        <Link to="/user/profile">Profile</Link>
       )}
       {props.doctor ? (
         <Link to="/doctor/availablepatients">Patients</Link>
