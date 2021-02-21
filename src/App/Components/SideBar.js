@@ -8,9 +8,14 @@ export default function SideBar(props) {
         &times;
       </a>
       {props.doctor ? (
-        <Link to="/doctor/dash">Profile</Link>
+        <Link to="/doctor/dash">Home</Link>
       ) : (
-        <Link to="/doctor/dash">Profile</Link>
+        <Link to="/user/dash">Home</Link>
+      )}
+      {props.doctor ? (
+        <Link to="/doctor/profile">Profile</Link>
+      ) : (
+        <Link to="/doctor/profile">Profile</Link>
       )}
       {props.doctor ? (
         <Link to="/doctor/availablepatients">Patients</Link>
