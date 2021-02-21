@@ -13,6 +13,7 @@ import store from "./App/Redux/store";
 import DoctorList from "./App/Pages/User/DoctorList";
 import PatientList from "./App/Pages/Doctor/PatientList";
 import UserProfile from "./App/Pages/User/UserProfile";
+import DoctorProfile from "./App/Pages/Doctor/DoctorProfile";
 
 toast.configure();
 function App() {
@@ -33,6 +34,7 @@ function App() {
             <Route path="/doctor/signup" component={DoctorSignup} />
             <Route path="/doctor/dash" component={DoctorDash} />
             <Route path="/doctor/availablepatients" component={PatientList} />
+            <Route path="/doctor/profile" component={DoctorProfile} />
 
             <Route path="*" component={Error404} />
           </Switch>

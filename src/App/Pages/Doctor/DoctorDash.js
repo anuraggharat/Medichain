@@ -9,6 +9,27 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../../Components/Loader";
 import { Redirect } from "react-router-dom";
+import ModalImage from "react-modal-image";
+import r2 from "../../Assets/r1.jpg";
+
+const images = [
+  {
+    address: r2,
+    title: "Health Report",
+  },
+  {
+    address: r2,
+    title: "Blood Report",
+  },
+  {
+    address: r2,
+    title: "Medical Report",
+  },
+  {
+    address: r2,
+    title: "Covid Report",
+  },
+];
 
 function DoctorDash({ user, logoutUser, isLoggedIn }) {
   const openNav = () => {
@@ -18,24 +39,25 @@ function DoctorDash({ user, logoutUser, isLoggedIn }) {
     document.getElementById("mySidenav").style.width = "0";
   };
 
-  if (!isLoggedIn) {
-    return <Redirect to="/doctor/login" />;
-  }
+  // if (!isLoggedIn) {
+  //   return <Redirect to="/doctor/login" />;
+  // }
 
   return (
     <div className="w-100 min-vh-100 bg-light">
       <SideBar closenav={closeNav} doctor={true} logoutUser={logoutUser} />
-      <Navbar sidebarToggler={openNav} name={user.name} />
+      <Navbar sidebarToggler={openNav} name={"Anurag"} />
 
       <div id="main">
         <div className="container bg-light">
           <div className="container ">
-            <div className="row p-3 bg-white mb-3">
+            <div className="w-100 p-3 bg-white mb-3 d-flex justify-content-between align-items-center">
               <h3>Doctor Dashboard</h3>
+              <Link to="/doctor/profile">Visit profile</Link>
             </div>
             <div className="row">
-              <div className="col-lg-6 col-sm-12">
-                <div className="card border-0 shadow">
+              <div className="col-lg-12 col-sm-12">
+                <div className="card border-0 rounded shadow">
                   <div className="card-body">
                     <h3 className="card-title">
                       <BsFileText className="mr-3" />
@@ -43,86 +65,26 @@ function DoctorDash({ user, logoutUser, isLoggedIn }) {
                     </h3>
                     <div className="border-top mb-3"></div>
 
-                    <ul className="list-group p-0 list-group-flush text-muted">
-                      <li className="list-group-item pl-0">
-                        John Doe Blood Test
-                      </li>
-                      <li className="list-group-item pl-0">John Doe Report</li>
-                      <li className="list-group-item pl-0">
-                        Tony Stark Report
-                      </li>
-                      <li className="list-group-item pl-0">
-                        Jane Foster Checkup
-                      </li>
-                      <li className="list-group-item pl-0">
-                        Jane Foster Report
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6 col-sm-12">
-                <div className="card border-0 shadow">
-                  <div className="card-body">
-                    <h3 className="card-title">
-                      <BiUserCircle className="mr-3" />
-                      Doctor Profile
-                    </h3>
-                    <div className="border-top mb-3"></div>
-                    <ul className="list-group p-0 list-group-flush">
-                      <li className="list-group-item pl-0">
-                        <div className="row">
-                          <div className="col-lg-4">
-                            <p className="font-weight-bold m-0  ">
-                              Profile Name
-                            </p>
-                          </div>
-                          <div className="col-lg-8 text-muted">
-                            <p>Anurag Gharat</p>
+                    <div className="row">
+                      {images.map((item, index) => (
+                        <div key={index} className="col-lg-4 p-4 ">
+                          <div className=" card ">
+                            <ModalImage
+                              small={item.address}
+                              medium={item.address}
+                              large={item.address}
+                              alt={item.title}
+                              showRotate={true}
+                              hideZoom={true}
+                              className="card-img-top"
+                            />
+                            <div className="card-footer">
+                              <h5>{item.title}</h5>
+                            </div>
                           </div>
                         </div>
-                      </li>
-                      <li className="list-group-item pl-0">
-                        <div className="row">
-                          <div className="col-lg-4">
-                            <p className="font-weight-bold">Email Address</p>
-                          </div>
-                          <div className="col-lg-8 text-muted">
-                            <p>anuraggharat55@gmail.com</p>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="list-group-item pl-0">
-                        <div className="row">
-                          <div className="col-lg-4 ">
-                            <p className="font-weight-bold">Date of Birth</p>
-                          </div>
-                          <div className="col-lg-8 text-muted">
-                            <p>27 Jul 1999</p>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="list-group-item pl-0">
-                        <div className="row">
-                          <div className="col-lg-4">
-                            <p className="font-weight-bold">Phone Number</p>
-                          </div>
-                          <div className="col-lg-8 text-muted">
-                            <p>7745050822</p>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="list-group-item pl-0">
-                        <div className="row">
-                          <div className="col-lg-4">
-                            <p className="font-weight-bold">Address</p>
-                          </div>
-                          <div className="col-lg-8 text-muted">
-                            <p>0x47a64e6AB5d944308ce419D4E7664FC7433670BA</p>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
