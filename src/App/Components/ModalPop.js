@@ -4,7 +4,7 @@ import Profile from "./Profile";
 
 const ModalPop = ({ item, modal, toggle }) => {
   return (
-    <Modal isOpen={modal} toggle={toggle} className="bg-primary">
+    <Modal isOpen={modal} toggle={toggle} dialogClassName="bg-primary">
       <ModalBody className="w-100">
         <Profile user={item} doctor={true} />
       </ModalBody>
