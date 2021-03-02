@@ -1,7 +1,7 @@
 pragma solidity >=0.4.25;
 
 contract Medichain {
-    string public name = "";
+    string public name;
     uint256 public imageCount = 0;
     mapping(uint256 => Image) public images;
 
@@ -9,6 +9,7 @@ contract Medichain {
         uint256 id;
         string hash;
         string description;
+        uint256 tipAmount;
         address author;
     }
 
@@ -16,11 +17,12 @@ contract Medichain {
         uint256 id,
         string hash,
         string description,
+        uint256 tipAmount,
         address author
     );
 
     constructor() public {
-        name = "MEDICHAIN";
+        name = "Decentragram";
     }
 
     function uploadImage(string memory _imgHash, string memory _description)
@@ -34,24 +36,17 @@ contract Medichain {
         require(msg.sender != address(0));
 
         // Increment image id
+        imageCount++;
 
         // Add Image to the contract
         images[imageCount] = Image(
             imageCount,
             _imgHash,
             _description,
+            0,
             msg.sender
         );
-        imageCount++;
         // Trigger an event
-        emit ImageCreated(imageCount, _imgHash, _description, msg.sender);
-    }
-
-    function getImageCount() public view returns (uint256) {
-        return imageCount;
-    }
-
-    function getImage(uint256 id) public view returns (string memory) {
-        return images[id].hash;
+        emit ImageCreated(imageCount, _imgHash, _description, 0, msg.sender);
     }
 }
