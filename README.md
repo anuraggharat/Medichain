@@ -32,7 +32,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ![User Profile](readme_Images/4.png)
 
-## 7. Doctor Signun
+## 7. Doctor Signup
 
 ![Doctor Signin](readme_Images/7.png)
 
