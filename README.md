@@ -39,3 +39,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## 8. Doctor Profile
 
 ![Doctor Profile](readme_Images/8.png)
+
+# ToDo
+1. Adding parent factory contract to deploy contract instances
+2. Add Contract for Sharinig records accross blockchain.
