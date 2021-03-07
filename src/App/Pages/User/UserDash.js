@@ -207,7 +207,7 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
                                 alt={item.description}
                                 showRotate={true}
                                 hideZoom={true}
-                                className="card-img-top"
+                                className="w-100 h-100"
                               />
                               <div className="card-footer">
                                 <h5>{item.description}</h5>
