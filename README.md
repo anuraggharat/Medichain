@@ -32,10 +32,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ![User Profile](readme_Images/4.png)
 
-## 7. Doctor Signin
+## 7. Doctor Signun
 
 ![Doctor Signin](readme_Images/7.png)
 
 ## 8. Doctor Profile
 
-![Doctor Profile](readme_Images/4.png)
+![Doctor Profile](readme_Images/8.png)
