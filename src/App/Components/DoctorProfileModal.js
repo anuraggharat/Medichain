@@ -1,11 +1,18 @@
 import React from "react";
 import { BiUserCircle } from "react-icons/bi";
+import { toast } from "react-toastify";
 
-export default function Profile({ user, doctor }) {
+export default function DoctorProfileModal({ user, doctor, toggle }) {
   console.log(user);
+
+  const grantAccess = () => {
+    toast.warning("Access granted");
+    toggle();
+  };
+
   return (
-    <div className="container">
-      <div className="card border-0 shadow">
+    <div className="container w-100">
+      <div className="card border-0 ">
         <div className="card-body">
           <h3 className="card-title text-primary">
             <BiUserCircle className="mr-3 text-primary" />
@@ -94,6 +101,16 @@ export default function Profile({ user, doctor }) {
                 <div className="col-lg-8 text-muted">
                   <p>{user.account ? user.account : ""}</p>
                 </div>
+              </div>
+            </li>
+            <li className="list-group-item pl-0">
+              <div className="container text-center ">
+                <button
+                  className="btn mx-auto btn-primary"
+                  onClick={() => grantAccess()}
+                >
+                  Provide Access
+                </button>
               </div>
             </li>
           </ul>

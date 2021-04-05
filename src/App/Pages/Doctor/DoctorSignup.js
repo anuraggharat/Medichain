@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import Web3 from "web3";
 import SideComponent from "../../Components/SideComponent";
 import DoctorAvatar from "../../Assets/doctor.svg";
 import { Link, Redirect } from "react-router-dom";
@@ -12,6 +12,7 @@ function DoctorSignup({ isLoggedIn, registerUser }) {
   const [values, setValues] = useState({
     name: "",
     phoneno: "",
+    account: "",
     gender: "",
     specialization: "",
     age: "",
@@ -26,6 +27,7 @@ function DoctorSignup({ isLoggedIn, registerUser }) {
   const {
     email,
     password,
+    account,
     name,
     phoneno,
     gender,
@@ -38,6 +40,26 @@ function DoctorSignup({ isLoggedIn, registerUser }) {
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+
+  //loading web3 token
+  const loadWeb3 = async () => {
+    console.log(window.ethereum);
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+      const web3 = await window.web3;
+      const accounts = await web3.eth.getAccounts();
+      toast.success("Ethereum Account detected!");
+      console.log(accounts);
+      setValues({ ...values, account: accounts[0] });
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+      toast.error("Non-Ethereum browser detected.");
+    }
+  };
+
+  console.log(values);
 
   //value submission function
   const submitValues = async (e) => {
@@ -58,6 +80,10 @@ function DoctorSignup({ isLoggedIn, registerUser }) {
       .catch((err) => toast.warning("Please try again!"));
     setLoading(false);
   };
+
+  useEffect(() => {
+    loadWeb3();
+  }, []);
 
   if (redirect) {
     return <Redirect to="/doctor/login" />;
@@ -80,15 +106,20 @@ function DoctorSignup({ isLoggedIn, registerUser }) {
                 onSubmit={(e) => submitValues(e)}
               >
                 <div className="mb-4 ">
-                  <input
-                    type="text"
-                    className="form-control border-0 bg-light rounded "
-                    id="name"
-                    placeholder="Full Name"
-                    name="name"
-                    value={name}
-                    onChange={(e) => handleChange(e)}
-                  />
+                  <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">
+                      Dr
+                    </span>
+                    <input
+                      type="text"
+                      className="form-control border-0 bg-light rounded "
+                      id="name"
+                      placeholder="Full Name"
+                      name="name"
+                      value={name}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </div>
                 </div>
                 <div className="mb-4 ">
                   <input
@@ -113,7 +144,7 @@ function DoctorSignup({ isLoggedIn, registerUser }) {
                   />
                 </div>
                 <div className="mb-4 ">
-                  <input
+                  {/* <input
                     type="text"
                     className="form-control border-0 bg-light rounded "
                     id="specialization"
@@ -121,7 +152,24 @@ function DoctorSignup({ isLoggedIn, registerUser }) {
                     name="specialization"
                     value={specialization}
                     onChange={(e) => handleChange(e)}
-                  />
+                  /> */}
+                  <select
+                    className="form-control border-0 bg-light"
+                    onChange={(e) => handleChange(e)}
+                    name="specialization"
+                    id="specialization"
+                  >
+                    <option defaultValue={specialization}>
+                      Select Specialization
+                    </option>
+                    <option value="Surgeon">Surgeon</option>
+                    <option value="Physician">Physician</option>
+                    <option value="Dermatologist">Dermatologist</option>
+                    <option value="Dentist">Dentist</option>
+                    <option value="Gynaecologist">Gynaecologist</option>
+                    <option value="Psychiatrist">Psychiatrist</option>
+                    <option value="Others">Others</option>
+                  </select>
                 </div>
                 <div className="row mb-4">
                   <div className="col-lg-4">
@@ -136,7 +184,7 @@ function DoctorSignup({ isLoggedIn, registerUser }) {
                       <option value="Other">Other</option>
                     </select>
                   </div>
-                  <div className="col-lg-4 mt-sm-3">
+                  <div className="col-lg-4">
                     <input
                       type="number"
                       className="form-control border-0 bg-light rounded "
@@ -147,7 +195,7 @@ function DoctorSignup({ isLoggedIn, registerUser }) {
                       onChange={(e) => handleChange(e)}
                     />
                   </div>
-                  <div className="col-lg-4 mt-sm-3">
+                  <div className="col-lg-4">
                     <input
                       type="text"
                       className="form-control border-0 bg-light rounded "
