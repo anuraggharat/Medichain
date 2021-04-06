@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { BiUserCircle } from "react-icons/bi";
 import { toast } from "react-toastify";
 import Web3 from "web3";
+import { connect } from "react-redux";
 
-export default function DoctorProfileModal({
-  user,
-  doctor,
-  toggle,
-  medichain,
-}) {
+function DoctorProfileModal({ user, doctor, toggle, medichain }) {
   const [acco, setAcco] = useState(null);
+  console.log(medichain);
 
   console.log(user);
   const d = new Date();
@@ -23,18 +20,18 @@ export default function DoctorProfileModal({
   // }
 
   //this function add doctors to access list
-  const grantAccess = async () => {
-    const date = day + "/" + month + "/" + year;
-    medichain.methods
-      .addDoctor(0x53203e10d1f0ad007e239d3ea88523d0931d8847, user.name, date)
-      .send({ from: 0x53203e10d1f0ad007e239d3ea88523d0931d8847 })
-      .on("transactionHash", (hash) => {
-        console.log(hash);
-      });
-    console.log(date);
-    // toggle();
-    // toast.warning("Access granted");
-  };
+  // const grantAccess = async () => {
+  //   const date = day + "/" + month + "/" + year;
+  //   medichain.methods
+  //     .addDoctor(0x53203e10d1f0ad007e239d3ea88523d0931d8847, user.name, date)
+  //     .send({ from: 0x53203e10d1f0ad007e239d3ea88523d0931d8847 })
+  //     .on("transactionHash", (hash) => {
+  //       console.log(hash);
+  //     });
+  //   console.log(date);
+  //   // toggle();
+  //   // toast.warning("Access granted");
+  // };
 
   // useEffect(() => {
   //   getAccount();
@@ -137,7 +134,7 @@ export default function DoctorProfileModal({
               <div className="container text-center ">
                 <button
                   className="btn mx-auto btn-primary"
-                  onClick={() => grantAccess()}
+                  // onClick={() => grantAccess()}
                 >
                   Provide Access
                 </button>
@@ -149,3 +146,7 @@ export default function DoctorProfileModal({
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  medichain: state.medichain.medichain,
+});
+export default connect(mapStateToProps)(DoctorProfileModal);

@@ -12,6 +12,7 @@ import { Link, Redirect } from "react-router-dom";
 import ModalImage from "react-modal-image";
 import r2 from "../../Assets/r1.jpg";
 import Medichain from "../../../Ethereum/abis/Medichain.json";
+import { loadMedichain } from "../../Redux/Actions/medichain";
 
 //Declare IPFS
 const ipfsClient = require("ipfs-http-client");
@@ -23,13 +24,13 @@ const ipfs = ipfsClient({
 
 var i = [];
 
-function UserDash({ user, logoutUser, isLoggedIn }) {
+function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
   const [loading, setloading] = useState(false);
 
   const [state, setState] = useState(null);
   const [images, setImages] = useState([]);
   const [account, setAccount] = useState(null);
-  const [medichain, setMedichain] = useState(null);
+  const [medichainContract, setMedichainContract] = useState(null);
   const [count, setCount] = useState(0);
   const [buffer, setBuffer] = useState({
     buffer: null,
@@ -67,7 +68,7 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
         return;
       }
 
-      medichain.methods
+      medichainContract.methods
         .uploadImage(result[0].hash, description)
         .send({ from: account })
         .on("transactionHash", (hash) => {
@@ -76,6 +77,9 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
         });
     });
   };
+  console.log("====================================");
+  console.log("medichain contracts", medichainContract);
+  console.log("====================================");
   console.log(images);
   //load web3 data
   const loadWeb3 = async () => {
@@ -103,19 +107,22 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
     const networkData = Medichain.networks[networkId];
     if (networkData) {
       console.log("got network");
-      const medichain = new web3.eth.Contract(
+      const medichainabis = new web3.eth.Contract(
         Medichain.abi,
         networkData.address
       );
-      setMedichain(medichain);
-      const imagesCount = await medichain.methods.imageCount().call();
+      //adds abis to local state
+      setMedichainContract(medichainabis);
+      //adds abis to global state
+      loadMedichain(medichainabis);
+      const imagesCount = await medichainContract.methods.imageCount().call();
       console.log(imagesCount, "Images count");
-      console.log(typeof imagesCount);
+      // console.log(typeof imagesCount);
       setCount(imagesCount);
       // Load images
       console.log("Before", images);
       for (var i = 1; i <= imagesCount; i++) {
-        const image = await medichain.methods.images(i).call();
+        const image = await medichainContract.methods.images(i).call();
         // setImages([...images, image]);
         images[i - 1] = image;
         console.log(i, image);
@@ -133,7 +140,7 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
     await loadBlockchainData();
   }, []);
 
-  console.log(medichain);
+  console.log(medichainContract);
   function getBlockchaindata() {}
 
   // if (!isLoggedIn) {
@@ -141,12 +148,7 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
   // }
   return (
     <div className="w-100 min-vh-100 bg-light">
-      <SideBar
-        closenav={closeNav}
-        logoutUser={logoutUser}
-        doctor={false}
-        medichain={medichain}
-      />
+      <SideBar closenav={closeNav} logoutUser={logoutUser} doctor={false} />
       <Navbar sidebarToggler={openNav} name={"Anurag"} />
 
       <div id="main">
@@ -237,5 +239,8 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
 const mapStateToProps = (state) => ({
   isLoggedIn: state.user.isLoggedIn,
   user: state.user.user,
+  medichain: state.medichain.medichain,
 });
-export default connect(mapStateToProps, { logoutUser })(UserDash);
+export default connect(mapStateToProps, { logoutUser, loadMedichain })(
+  UserDash
+);

@@ -21,12 +21,7 @@ export default function SideBar(props) {
       {props.doctor ? (
         <Link to="/doctor/availablepatients">Patients</Link>
       ) : (
-        <Link
-          to={{ pathname: "/user/availabledoctors", param: props.medichain }}
-          medichain={props.medichain}
-        >
-          Doctors
-        </Link>
+        <Link to="/user/availabledoctors">Doctors</Link>
       )}
 
       <a className="link" href="#" onClick={() => props.logoutUser()}>

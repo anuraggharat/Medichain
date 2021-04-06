@@ -67,10 +67,10 @@ function UserLogin({ loginUser, user, isLoggedIn, medichain, loadMedichain }) {
     loadMedichain("data changed");
   }
 
-  //useeffect hook to trigger web3
-  useEffect(() => {
-    medichaindata();
-  }, []);
+  // //useeffect hook to trigger web3
+  // useEffect(() => {
+  //   medichaindata();
+  // }, []);
 
   if (isLoggedIn) {
     return <Redirect to="/user/dash" />;
