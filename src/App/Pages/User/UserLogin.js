@@ -7,8 +7,9 @@ import { loginUser } from "../../Redux/Actions/user";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../../Components/Loader";
+import { loadMedichain } from "../../Redux/Actions/medichain";
 
-function UserLogin({ loginUser, user, isLoggedIn }) {
+function UserLogin({ loginUser, user, isLoggedIn, medichain, loadMedichain }) {
   const [account, setAccount] = useState();
   const [values, setValues] = useState({
     email: "",
@@ -17,6 +18,8 @@ function UserLogin({ loginUser, user, isLoggedIn }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { email, password } = values;
+
+  console.log("medichain is here", medichain);
 
   //handleChange function to set input values
   const handleChange = (e) => {
@@ -60,10 +63,14 @@ function UserLogin({ loginUser, user, isLoggedIn }) {
     }
   };
 
+  function medichaindata() {
+    loadMedichain("data changed");
+  }
+
   //useeffect hook to trigger web3
-  // useEffect(() => {
-  //   loadWeb3();
-  // }, []);
+  useEffect(() => {
+    medichaindata();
+  }, []);
 
   if (isLoggedIn) {
     return <Redirect to="/user/dash" />;
@@ -143,5 +150,8 @@ function UserLogin({ loginUser, user, isLoggedIn }) {
 const mapStateToProps = (state) => ({
   isLoggedIn: state.user.isLoggedIn,
   user: state.user.user,
+  medichain: state.medichain.medichain,
 });
-export default connect(mapStateToProps, { loginUser })(UserLogin);
+export default connect(mapStateToProps, { loginUser, loadMedichain })(
+  UserLogin
+);
