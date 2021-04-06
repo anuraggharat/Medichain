@@ -11,10 +11,11 @@ import { Link, Redirect } from "react-router-dom";
 import { getDoctors } from "../../utils/getRequests";
 import ListGroup from "../../Components/ListGroup";
 
-function DoctorList({ isLoggedIn, logoutUser }) {
+function DoctorList({ isLoggedIn, logoutUser, location }) {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  console.log(location);
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
   };
@@ -87,7 +88,13 @@ function DoctorList({ isLoggedIn, logoutUser }) {
             {loading && <Loader />}
             {!loading &&
               data &&
-              data.map((item) => <ListGroup key={item._id} item={item} />)}
+              data.map((item) => (
+                <ListGroup
+                  key={item._id}
+                  item={item}
+                  medichain={location.param}
+                />
+              ))}
           </div>
         </div>
       </div>

@@ -133,12 +133,20 @@ function UserDash({ user, logoutUser, isLoggedIn }) {
     await loadBlockchainData();
   }, []);
 
+  console.log(medichain);
+  function getBlockchaindata() {}
+
   // if (!isLoggedIn) {
   //   return <Redirect to="/user/login" />;
   // }
   return (
     <div className="w-100 min-vh-100 bg-light">
-      <SideBar closenav={closeNav} logoutUser={logoutUser} doctor={false} />
+      <SideBar
+        closenav={closeNav}
+        logoutUser={logoutUser}
+        doctor={false}
+        medichain={medichain}
+      />
       <Navbar sidebarToggler={openNav} name={"Anurag"} />
 
       <div id="main">

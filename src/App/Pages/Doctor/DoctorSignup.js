@@ -41,7 +41,7 @@ function DoctorSignup({ isLoggedIn, registerUser }) {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  //loading web3 token
+  //loading web3 token and getting account address
   const loadWeb3 = async () => {
     console.log(window.ethereum);
     if (window.ethereum) {

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Web3 from "web3";
 import SideComponent from "../../Components/SideComponent";
 import UserAvatar from "../../Assets/man.svg";
 import { Link, Redirect } from "react-router-dom";
@@ -10,6 +11,7 @@ import Loader from "../../Components/Loader";
 function UserSignup({ isLoggedIn, registerUser }) {
   const [values, setValues] = useState({
     name: "",
+    account: "",
     phoneno: "",
     gender: "",
     age: "",
@@ -26,6 +28,24 @@ function UserSignup({ isLoggedIn, registerUser }) {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+  //getaccount info
+  const loadWeb3 = async () => {
+    console.log(window.ethereum);
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+      const web3 = await window.web3;
+      const accounts = await web3.eth.getAccounts();
+      toast.success("Ethereum Account detected!");
+      console.log(accounts);
+      setValues({ ...values, account: accounts[0] });
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+      toast.error("Non-Ethereum browser detected.");
+    }
+  };
+
   //value submission function
   const submitValues = async (e) => {
     setLoading(true);
@@ -33,6 +53,7 @@ function UserSignup({ isLoggedIn, registerUser }) {
 
     registerUser(values)
       .then(async (res) => {
+        console.log(res);
         if (res.success) {
           await toast.success(res.message);
           await toast("Redirecting to Login!");
@@ -45,7 +66,9 @@ function UserSignup({ isLoggedIn, registerUser }) {
       })
       .catch((err) => toast.warning("Please try again!"));
   };
-
+  useEffect(() => {
+    loadWeb3();
+  }, []);
   if (redirect) {
     return <Redirect to="/user/login" />;
   }
