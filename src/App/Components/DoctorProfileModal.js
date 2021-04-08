@@ -5,7 +5,7 @@ import Web3 from "web3";
 import { connect } from "react-redux";
 
 function DoctorProfileModal({ user, doctor, toggle, medichain }) {
-  const [acco, setAcco] = useState(null);
+  const [acc, setAcc] = useState(null);
   console.log(medichain);
 
   console.log(user);
@@ -14,28 +14,43 @@ function DoctorProfileModal({ user, doctor, toggle, medichain }) {
   const month = String(d.getMonth() + 1);
   const year = String(d.getFullYear());
 
-  // async function getAccount() {
-  //   const acc = await web3.eth.getAccounts();
-  //   setAcco(acc[0]);
-  // }
+  async function getAccount() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+      const web3 = await window.web3;
+      const accounts = await web3.eth.getAccounts();
+      toast.success("Account found");
+      console.log(accounts);
+      setAcc(accounts[0]);
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+      toast.error("Non-Ethereum browser detected.");
+    }
+  }
 
-  //this function add doctors to access list
-  // const grantAccess = async () => {
-  //   const date = day + "/" + month + "/" + year;
-  //   medichain.methods
-  //     .addDoctor(0x53203e10d1f0ad007e239d3ea88523d0931d8847, user.name, date)
-  //     .send({ from: 0x53203e10d1f0ad007e239d3ea88523d0931d8847 })
-  //     .on("transactionHash", (hash) => {
-  //       console.log(hash);
-  //     });
-  //   console.log(date);
-  //   // toggle();
-  //   // toast.warning("Access granted");
-  // };
+  const grantAccess = async () => {
+    const date = day + "/" + month + "/" + year;
+    medichain.methods
+      .addDoctor(user.account, user.name, date)
+      .send({ from: acc })
+      .on("transactionHash", (hash) => {
+        console.log(hash);
+      });
+    // toggle();
+    // toast.warning("Access granted");
+  };
 
-  // useEffect(() => {
-  //   getAccount();
-  // }, []);
+  const seelist=async()=>{
+    const accesscount = await medichain.methods.doctorCount().call();
+    console.log(accesscount)
+  }
+
+
+  useEffect(() => {
+    getAccount();
+  }, []);
 
   return (
     <div className="container w-100">
@@ -134,9 +149,15 @@ function DoctorProfileModal({ user, doctor, toggle, medichain }) {
               <div className="container text-center ">
                 <button
                   className="btn mx-auto btn-primary"
-                  // onClick={() => grantAccess()}
+                  onClick={() => grantAccess()}
                 >
                   Provide Access
+                </button>
+                <button
+                  className="btn mx-auto btn-primary"
+                  onClick={() => seelist()}
+                >
+                  See list
                 </button>
               </div>
             </li>

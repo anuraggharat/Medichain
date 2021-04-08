@@ -18,7 +18,8 @@ export default function (state = initialState, action) {
     case MEDICHIAN_LOADED:
       return {
         ...state,
-        medichain: payload,
+        medichain: payload.medichainabis,
+        account: payload.account,
       };
     default:
       return {

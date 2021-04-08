@@ -19,7 +19,7 @@ function DoctorLogin({ loginUser, user, isLoggedIn }) {
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
-  console.log(isLoggedIn);
+
   //value submission function
   const submitValues = async (e) => {
     await setLoading(true);

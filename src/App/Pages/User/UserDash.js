@@ -77,10 +77,7 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
         });
     });
   };
-  console.log("====================================");
-  console.log("medichain contracts", medichainContract);
-  console.log("====================================");
-  console.log(images);
+
   //load web3 data
   const loadWeb3 = async () => {
     if (window.ethereum) {
@@ -94,6 +91,7 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
       );
     }
   };
+
   console.log(state);
   const loadBlockchainData = async () => {
     setloading(true);
@@ -102,6 +100,7 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
     // Load account
     const accounts = await web3.eth.getAccounts();
     setAccount(accounts[0]);
+    console.log("Accont", account);
     // Network ID
     const networkId = await web3.eth.net.getId();
     const networkData = Medichain.networks[networkId];
@@ -114,15 +113,15 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
       //adds abis to local state
       setMedichainContract(medichainabis);
       //adds abis to global state
-      loadMedichain(medichainabis);
-      const imagesCount = await medichainContract.methods.imageCount().call();
+      loadMedichain({ medichainabis, account });
+      const imagesCount = await medichainabis.methods.imageCount().call();
       console.log(imagesCount, "Images count");
       // console.log(typeof imagesCount);
       setCount(imagesCount);
       // Load images
       console.log("Before", images);
       for (var i = 1; i <= imagesCount; i++) {
-        const image = await medichainContract.methods.images(i).call();
+        const image = await medichainabis.methods.images(i).call();
         // setImages([...images, image]);
         images[i - 1] = image;
         console.log(i, image);
