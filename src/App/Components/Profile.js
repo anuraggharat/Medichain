@@ -1,15 +1,36 @@
 import React from "react";
 import { BiUserCircle } from "react-icons/bi";
+import {putRequests} from '../utils/postRequests'
+import { connect } from "react-redux";
 
-export default function Profile({ user, doctor }) {
-  console.log(user);
+
+function Profile({ item, doctor,user }) {
+  console.log(item,"Item");
+    const generateReq = () => {
+      const mess = {
+        from: user.name,
+        to: item.email,
+        email: user.email,
+        account: user.account,
+        gender: user.gender,
+        phoneno: user.phoneno,
+        age: user.age,
+        city: user.city,
+        specialization:user.specialization,
+      };
+    putRequests(mess).then(res=>console.log(res,"response"))
+    };
+console.log(user,"User")
   return (
+
+
+
     <div className="container">
       <div className="card border-0 shadow">
         <div className="card-body">
           <h3 className="card-title text-primary">
             <BiUserCircle className="mr-3 text-primary" />
-            {doctor ? "Doctor Profile" : "User Profile"}
+            {"User Profile"}
           </h3>
           <div className="border-top mb-3"></div>
           <ul className="list-group p-0 list-group-flush">
@@ -19,7 +40,7 @@ export default function Profile({ user, doctor }) {
                   <p className="font-weight-bold m-0  ">Profile Name</p>
                 </div>
                 <div className="col-lg-8 text-muted">
-                  <p>{user.name}</p>
+                  <p>{item.name}</p>
                 </div>
               </div>
             </li>
@@ -29,7 +50,7 @@ export default function Profile({ user, doctor }) {
                   <p className="font-weight-bold">Email Address</p>
                 </div>
                 <div className="col-lg-8 text-muted">
-                  <p>{user.email}</p>
+                  <p>{item.email}</p>
                 </div>
               </div>
             </li>
@@ -39,7 +60,7 @@ export default function Profile({ user, doctor }) {
                   <p className="font-weight-bold">Age</p>
                 </div>
                 <div className="col-lg-8 text-muted">
-                  <p>{user.age}</p>
+                  <p>{item.age}</p>
                 </div>
               </div>
             </li>
@@ -49,7 +70,7 @@ export default function Profile({ user, doctor }) {
                   <p className="font-weight-bold">Phone Number</p>
                 </div>
                 <div className="col-lg-8 text-muted">
-                  <p>{user.phoneno}</p>
+                  <p>{item.phoneno}</p>
                 </div>
               </div>
             </li>
@@ -59,7 +80,7 @@ export default function Profile({ user, doctor }) {
                   <p className="font-weight-bold">Gender</p>
                 </div>
                 <div className="col-lg-8 text-muted">
-                  <p>{user.gender}</p>
+                  <p>{item.gender}</p>
                 </div>
               </div>
             </li>
@@ -69,31 +90,23 @@ export default function Profile({ user, doctor }) {
                   <p className="font-weight-bold">City</p>
                 </div>
                 <div className="col-lg-8 text-muted">
-                  <p>{user.city}</p>
+                  <p>{item.city}</p>
                 </div>
               </div>
             </li>
-            {doctor && (
-              <li className="list-group-item pl-0">
-                <div className="row">
-                  <div className="col-lg-4">
-                    <p className="font-weight-bold">Specialization</p>
-                  </div>
-                  <div className="col-lg-8 text-muted">
-                    <p>{user.specialization}</p>
-                  </div>
-                </div>
-              </li>
-            )}
-
             <li className="list-group-item pl-0">
               <div className="row">
                 <div className="col-lg-4">
                   <p className="font-weight-bold">Address</p>
                 </div>
                 <div className="col-lg-8 text-muted">
-                  <p>{user.account ? user.account : ""}</p>
+                  <p>{item.account ? item.account : ""}</p>
                 </div>
+              </div>
+            </li>
+            <li>
+              <div className="container">
+                <button className="btn btn-primary" onClick={()=>generateReq()}>Put Request</button>
               </div>
             </li>
           </ul>
@@ -102,3 +115,5 @@ export default function Profile({ user, doctor }) {
     </div>
   );
 }
+
+export default Profile;

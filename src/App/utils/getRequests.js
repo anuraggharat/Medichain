@@ -17,3 +17,5 @@ export const getPatients = async () => {
     return { success: false, error: "Unable to fetch  data" };
   }
 };
+
+

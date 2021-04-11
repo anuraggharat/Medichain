@@ -153,12 +153,7 @@ function DoctorProfileModal({ user, doctor, toggle, medichain }) {
                 >
                   Provide Access
                 </button>
-                <button
-                  className="btn mx-auto btn-primary"
-                  onClick={() => seelist()}
-                >
-                  See list
-                </button>
+                
               </div>
             </li>
           </ul>

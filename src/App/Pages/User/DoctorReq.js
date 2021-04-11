@@ -8,13 +8,14 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../../Components/Loader";
 import { Link, Redirect } from "react-router-dom";
-import { getPatients } from "../../utils/getRequests";
+import { getDoctors } from "../../utils/getRequests";
 import ListGroup from "../../Components/ListGroup";
 
-function PatientList({ user, logoutUser, isLoggedIn }) {
+function DoctorList({ user, isLoggedIn, logoutUser }) {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
+
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
   };
@@ -24,13 +25,13 @@ function PatientList({ user, logoutUser, isLoggedIn }) {
 
   const fetchData = async () => {
     if (isLoggedIn) {
-      getPatients()
+      getDoctors()
         .then((res) => {
           console.log(res);
           if (res.success) {
             setData(res.data);
             setCount(res.count);
-            toast.success("List of all available users!");
+            toast.success("List of all available doctors!");
           } else {
             toast.warning("Unable to show data");
           }
@@ -46,19 +47,20 @@ function PatientList({ user, logoutUser, isLoggedIn }) {
     fetchData();
   }, []);
 
+  console.log(isLoggedIn);
+
   if (!isLoggedIn) {
-    return <Redirect to="/doctor/login" />;
+    return <Redirect to="/user/login" />;
   }
 
   return (
     <div className="min-vh-100 w-100 bg-light">
-      <SideBar closenav={closeNav} logoutUser={logoutUser} doctor={true} />
+      <SideBar closenav={closeNav} logoutUser={logoutUser} />
       <Navbar sidebarToggler={openNav} name={user.name} />
-      <div className="container d-flex justify-content-between mt-5 p-0">
-        <Link to="/doctor/dash" className="link">
+      <div className="container mt-5 p-0">
+        <Link to="/user/dash" className="link">
           Go back Home
         </Link>
-        <p>Displaying {count} records</p>
       </div>
       <div className="container mt-3">
         <div className="row">
@@ -86,7 +88,7 @@ function PatientList({ user, logoutUser, isLoggedIn }) {
             {loading && <Loader />}
             {!loading &&
               data &&
-              data.map((item) => <ListGroup user={user} key={item._id} item={item} doctor={false} />)}
+              data.map((item) => <ListGroup key={item._id} item={item} />)}
           </div>
         </div>
       </div>
@@ -94,7 +96,7 @@ function PatientList({ user, logoutUser, isLoggedIn }) {
   );
 }
 const mapStateToProps = (state) => ({
-  isLoggedIn: state.doctor.isLoggedIn,
-  user: state.doctor.user,
+  isLoggedIn: state.user.isLoggedIn,
+  user: state.user.user,
 });
-export default connect(mapStateToProps, { logoutUser })(PatientList);
+export default connect(mapStateToProps)(DoctorList);
