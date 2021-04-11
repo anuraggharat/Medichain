@@ -23,6 +23,11 @@ export default function SideBar(props) {
       ) : (
         <Link to="/user/availabledoctors">Doctors</Link>
       )}
+      {props.doctor ? (
+        null
+      ) : (
+        <Link to="/user/requests">Requests</Link>
+      )}
 
       <a className="link" href="#" onClick={() => props.logoutUser()}>
         Logout
