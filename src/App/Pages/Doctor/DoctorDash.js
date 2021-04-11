@@ -81,10 +81,10 @@ function DoctorDash({ user, logoutUser, isLoggedIn,medichain }) {
 
 
 
-    useEffect(async() => {
-      await loadWeb3();
-      await checkAccess()
-    }, []);
+    // useEffect(async() => {
+    //   await loadWeb3();
+    //   await checkAccess()
+    // }, []);
 
 
   if (!isLoggedIn) {
@@ -95,7 +95,7 @@ function DoctorDash({ user, logoutUser, isLoggedIn,medichain }) {
   return (
     <div className="w-100 min-vh-100 bg-light">
       <SideBar closenav={closeNav} doctor={true} logoutUser={logoutUser} />
-      <Navbar sidebarToggler={openNav} name={"Anurag"} />
+      <Navbar sidebarToggler={openNav} name={user.name}  />
 
       <div id="main">
         <div className="container bg-light">

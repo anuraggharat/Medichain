@@ -148,7 +148,7 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
   return (
     <div className="w-100 min-vh-100 bg-light">
       <SideBar closenav={closeNav} logoutUser={logoutUser} doctor={false} />
-      <Navbar sidebarToggler={openNav} name={"Anurag"} />
+      <Navbar sidebarToggler={openNav} name={user.name} />
 
       <div id="main">
         <div className="container bg-light">

@@ -52,8 +52,8 @@ function PatientList({ user, logoutUser, isLoggedIn }) {
 
   return (
     <div className="min-vh-100 w-100 bg-light">
-      <SideBar closenav={closeNav} logoutUser={logoutUser} />
-      <Navbar sidebarToggler={openNav} name={"Anurag"} />
+      <SideBar closenav={closeNav} logoutUser={logoutUser} doctor={true} />
+      <Navbar sidebarToggler={openNav} name={user.name} />
       <div className="container d-flex justify-content-between mt-5 p-0">
         <Link to="/user/dash" className="link">
           Go back Home

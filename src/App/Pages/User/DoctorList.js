@@ -11,7 +11,7 @@ import { Link, Redirect } from "react-router-dom";
 import { getDoctors } from "../../utils/getRequests";
 import ListGroup from "../../Components/ListGroup";
 
-function DoctorList({ isLoggedIn, logoutUser }) {
+function DoctorList({ user,isLoggedIn, logoutUser }) {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -56,7 +56,7 @@ function DoctorList({ isLoggedIn, logoutUser }) {
   return (
     <div className="min-vh-100 w-100 bg-light">
       <SideBar closenav={closeNav} logoutUser={logoutUser} />
-      <Navbar sidebarToggler={openNav} name={"Anurag"} />
+      <Navbar sidebarToggler={openNav} name={user.name} />
       <div className="container mt-5 p-0">
         <Link to="/user/dash" className="link">
           Go back Home

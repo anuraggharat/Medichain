@@ -19,7 +19,7 @@ function UserProfile({ isLoggedIn, logoutUser, user }) {
   return (
     <div className="w-100 min-vh-100 bg-light">
       <SideBar closenav={closeNav} logoutUser={logoutUser} doctor={false} />
-      <Navbar sidebarToggler={openNav} name={"Anurag"} />
+      <Navbar sidebarToggler={openNav} name={user.name} />
       <div className="container mt-5">
         <Profile user={user} doctor={false} />
       </div>
