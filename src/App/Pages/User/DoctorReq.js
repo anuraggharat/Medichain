@@ -9,6 +9,7 @@ import Loader from "../../Components/Loader";
 import { Link, Redirect } from "react-router-dom";
 import { getrequests } from "../../utils/postRequests";
 import ReqModal from "../../Components/ReqModal";
+import { removeRequest } from "../../utils/deleteRequest";
 
 
 function DoctorReq({ user, isLoggedIn, logoutUser }) {
@@ -26,6 +27,20 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
     document.getElementById("mySidenav").style.width = "0";
   };
 
+  const deletereq=(id)=>{
+    setLoading(true)
+    console.log(id)
+    removeRequest(id).then(res=>{
+      if(res.data.success){
+        toast.success("Request Removed")
+      }
+      else{
+        toast.error("Unable to remove request")
+      }
+    }).finally(()=>setLoading(false))
+    fetchData()
+  }
+
   const fetchData = async () => {
          setLoading(true);
          getrequests(user.email)
@@ -33,7 +48,7 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
              if (res.success) {
                setData(res.data);
              } else {
-               setData([]);
+               setData(null);
              }
            })
            .catch((err) => toast.error("some Error"))
@@ -43,7 +58,6 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
 
   const giveAccess=()=>{}
 
-  const deleteReq=()=>{}
 
 
   useEffect(() => {
@@ -52,7 +66,7 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
 
   console.log(data)
 
-  if (!isLoggedIn) {
+  if (user) {
     return <Redirect to="/user/login" />;
   }
 
@@ -66,10 +80,9 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
         </Link>
       </div>
 
-
       <div className="container mt-3">
         <div className="row list-group">
-          <div className="list-group-item active">
+          <div className="list-group-item active z-index-down">
             <div className="row ">
               <div className="col-lg-9">Messages</div>
               <div className="col-lg-3">Actions</div>
@@ -88,7 +101,7 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
                       <FaCheck />
                     </button>
                     <button className="btn btn-danger ml-2">
-                      <FaTrashAlt />
+                      <FaTrashAlt onClick={() => deletereq(item._id)} />
                     </button>
                     <button className="btn btn-primary ml-2" onClick={toggle}>
                       <FaEye />
@@ -97,6 +110,11 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
                 </div>
               </div>
             ))}
+          {!data && (
+            <div className="alert alert-warning">
+              No requests for you today.
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -38,6 +38,9 @@ body {
   border-radius: 25px !important;
   border: 1px solid var(--primary-color);
 }
+.z-index-down{
+  z-index: 0 !important;
+}
 .bg-light {
   background-color: #f3f4f6 !important;
 }
