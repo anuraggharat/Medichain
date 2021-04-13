@@ -66,9 +66,9 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
 
   console.log(data)
 
-  if (user) {
-    return <Redirect to="/user/login" />;
-  }
+  // if (user) {
+  //   return <Redirect to="/user/login" />;
+  // }
 
   return (
     <div className="min-vh-100 w-100 bg-light">
@@ -100,8 +100,11 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
                     <button className="btn btn-success">
                       <FaCheck />
                     </button>
-                    <button className="btn btn-danger ml-2">
-                      <FaTrashAlt onClick={() => deletereq(item._id)} />
+                    <button
+                      className="btn btn-danger ml-2"
+                      onClick={() => deletereq(item._id)}
+                    >
+                      <FaTrashAlt />
                     </button>
                     <button className="btn btn-primary ml-2" onClick={toggle}>
                       <FaEye />

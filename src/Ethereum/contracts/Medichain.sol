@@ -3,7 +3,7 @@ pragma solidity >=0.4.25;
 contract Medichain {
     string public name;
     uint256 public imageCount = 0;
-    uint256 public doctorCount = 0;
+    uint256 public doctorCount=0;
     mapping(uint256 => Image) public images;
     mapping(address => AddedDoctor) public accessList;
 
@@ -12,8 +12,9 @@ contract Medichain {
         string hash;
         string description;
         address author;
+        string owner;
     }
-
+    
     //store data of every doctor added to access list
     struct AddedDoctor {
         uint256 id;
@@ -22,26 +23,31 @@ contract Medichain {
         string timestamp;
     }
 
+
+
     event ImageCreated(
         uint256 id,
         string hash,
         string description,
-        address author
+        address author,
+        string owner
     );
 
-    constructor() public {
+    constructor() public{
         name = "MediChain";
     }
 
-    function uploadImage(string memory _imgHash, string memory _description)
+    function uploadImage(string memory _imgHash, string memory _description,string memory _owner)
         public
     {
+    
         require(bytes(_imgHash).length > 0);
-
+        
         require(bytes(_description).length > 0);
-
+        
         require(msg.sender != address(0));
 
+        
         imageCount++;
 
         // Add Image to the contract
@@ -49,34 +55,47 @@ contract Medichain {
             imageCount,
             _imgHash,
             _description,
-            msg.sender
+            msg.sender,
+            _owner
         );
         // Trigger an event
-        emit ImageCreated(imageCount, _imgHash, _description, msg.sender);
+        emit ImageCreated(imageCount, _imgHash, _description, msg.sender,_owner);
     }
-
-    function addDoctor(
-        address _doctorAddress,
-        string memory _doctorName,
-        string memory _date
-    ) public {
+    
+    function addDoctor(address  _doctorAddress,string memory _doctorName, string memory _date) public{
+                
         require(bytes(_doctorName).length > 0);
-
+        
         require(msg.sender != address(0));
-        doctorCount++;
-
+              doctorCount++;
+        
         accessList[_doctorAddress] = AddedDoctor(
             doctorCount,
             _doctorAddress,
             _doctorName,
             _date
         );
+  
+        
     }
-
-    function checkGranted(address _doctorAddress) public view returns (bool) {
-        if (accessList[_doctorAddress].id > 0) {
+    
+    function checkGranted(address _doctorAddress) public view returns (bool)
+    {
+        if(accessList[_doctorAddress].id >0){
             return true;
         }
         return false;
     }
+    
+    
+    function revokeAccess(address _doctorAddress) public 
+    {
+        if(accessList[_doctorAddress].id >0){
+            delete accessList[_doctorAddress];
+        
+        }
+        
+        
+    }
+    
 }

@@ -99,4 +99,4 @@ const mapStateToProps = (state) => ({
   isLoggedIn: state.user.isLoggedIn,
   user: state.user.user,
 });
-export default connect(mapStateToProps)(DoctorList);
+export default connect(mapStateToProps,{logoutUser})(DoctorList);

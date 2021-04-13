@@ -36,6 +36,8 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
     buffer: null,
   });
   const [description, setDescription] = useState("");
+  const [owner, setOwner] = useState(user || "Owner name");
+
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
   };
@@ -69,13 +71,16 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
       }
 
       medichainContract.methods
-        .uploadImage(result[0].hash, description)
+        .uploadImage(result[0].hash, description,owner)
         .send({ from: account })
         .on("transactionHash", (hash) => {
           console.log(hash);
-          setloading(false);
+          loadBlockchainData();
         });
+        setDescription('')
+
     });
+    setloading(false)
   };
 
   //load web3 data
@@ -127,9 +132,11 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
         console.log(i, image);
         console.log("after", images);
       }
+      setImages([...images])
       setloading(false);
     } else {
-      window.alert("Decentragram contract not deployed to detected network.");
+      window.alert("Medichain contract not deployed to detected network.");
+      setloading(false)
     }
     console.log(images);
   };
@@ -137,14 +144,14 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
   useEffect(async () => {
     await loadWeb3();
     await loadBlockchainData();
-  }, []);
+  }, [description]);
 
   console.log(medichainContract);
-  function getBlockchaindata() {}
+  
 
-  // if (!isLoggedIn) {
-  //   return <Redirect to="/user/login" />;
-  // }
+  if (!user) {
+    return <Redirect to="/user/login" />;
+  }
   return (
     <div className="w-100 min-vh-100 bg-light">
       <SideBar closenav={closeNav} logoutUser={logoutUser} doctor={false} />
@@ -180,6 +187,18 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
                         onChange={(e) => setDescription(e.target.value)}
                         className="form-control"
                         placeholder="Description of your report"
+                        required
+                      />
+                    </div>
+                    <div className="form-group mr-sm-2">
+                      <br></br>
+                      <input
+                        id="owner"
+                        type="text"
+                        value={owner}
+                        onChange={(e) => setOwner(e.target.value)}
+                        className="form-control"
+                        placeholder="Owner of report"
                         required
                       />
                     </div>

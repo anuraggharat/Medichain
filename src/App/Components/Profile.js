@@ -99,16 +99,12 @@ console.log(user,"User")
                 <div className="col-lg-4">
                   <p className="font-weight-bold">Address</p>
                 </div>
-                <div className="col-lg-8 text-muted">
-                  <p>{item.account ? item.account : ""}</p>
-                </div>
+                
               </div>
             </li>
-            <li>
-              <div className="container">
-                <button className="btn btn-primary" onClick={()=>generateReq()}>Put Request</button>
+              <div className="container mt-5">
+                <button className="btn btn-primary mx-auto" onClick={()=>generateReq()}>Put Request</button>
               </div>
-            </li>
           </ul>
         </div>
       </div>

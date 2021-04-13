@@ -48,8 +48,10 @@ function DoctorDash({ user, logoutUser, isLoggedIn,medichain }) {
               const image = await medichain.methods.images(i).call();
               // setImages([...images, image]);
               // images[i - 1] = image;
-              setImages([...images, image]);
+              images[i - 1] = image;
+              
             }
+            setImages([...images]);
             setLoading(false);
       } else {
         toast.warning("No access")
@@ -81,10 +83,10 @@ function DoctorDash({ user, logoutUser, isLoggedIn,medichain }) {
 
 
 
-    // useEffect(async() => {
-    //   await loadWeb3();
-    //   await checkAccess()
-    // }, []);
+    useEffect(async() => {
+      await loadWeb3();
+      await checkAccess()
+    }, []);
 
 
   if (!isLoggedIn) {
