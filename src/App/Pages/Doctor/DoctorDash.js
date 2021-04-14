@@ -46,8 +46,7 @@ function DoctorDash({ user, logoutUser, isLoggedIn,medichain }) {
 
             for (var i = 1; i <= imagesCount; i++) {
               const image = await medichain.methods.images(i).call();
-              // setImages([...images, image]);
-              // images[i - 1] = image;
+              
               images[i - 1] = image;
               
             }
@@ -104,9 +103,7 @@ function DoctorDash({ user, logoutUser, isLoggedIn,medichain }) {
           <div className="container ">
             <div className="w-100 p-3 bg-white mb-3 d-flex justify-content-between align-items-center">
               <h3>Doctor Dashboard</h3>
-              <button className="btn btn-danger" onClick={() => checkAccess()}>
-                Check Records
-              </button>
+              
             </div>
             <div className="row">
               <div className="col-lg-12 col-sm-12">

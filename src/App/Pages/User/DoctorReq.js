@@ -4,6 +4,7 @@ import SideBar from "../../Components/SideBar";
 import {  FaCheck,  FaEye,  FaTrashAlt } from "react-icons/fa";
 import { logoutUser } from "../../Redux/Actions/user";
 import { connect } from "react-redux";
+import Web3 from "web3";
 import { toast } from "react-toastify";
 import Loader from "../../Components/Loader";
 import { Link, Redirect } from "react-router-dom";
@@ -12,14 +13,20 @@ import ReqModal from "../../Components/ReqModal";
 import { removeRequest } from "../../utils/deleteRequest";
 
 
-function DoctorReq({ user, isLoggedIn, logoutUser }) {
+function DoctorReq({ user, isLoggedIn, logoutUser,medichain }) {
+  const d = new Date();
+  const day = String(d.getDate());
+  const month = String(d.getMonth() + 1);
+  const year = String(d.getFullYear());
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
+  const [acc, setAcc] = useState(null);
+
   const toggle = () => setModal(!modal);
-
-
+  console.log(medichain);
+  console.log(user,"user")
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
   };
@@ -56,12 +63,42 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
   };
 
 
-  const giveAccess=()=>{}
+  const giveAccess=(item)=>{
+    console.log(user)
+      console.log(item) 
+      if(!user){
+        toast.warning("Login Again")
+        return <Redirect to="/"/>
+      } 
+      const date = day + "/" + month + "/" + year;
+      medichain.methods
+      .addDoctor(item.account, item.from, date)
+      .send({ from: user.account })
+      .on("transactionHash", (hash) => {
+        toast.success("Access Granted")
+  });
+  }
 
 
+    async function getAccount() {
+      if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        await window.ethereum.enable();
+        const web3 = await window.web3;
+        const accounts = await web3.eth.getAccounts();
+        toast.success("Account found");
+        console.log(accounts);
+        setAcc(accounts[0]);
+      } else if (window.web3) {
+        window.web3 = new Web3(window.web3.currentProvider);
+      } else {
+        toast.error("Non-Ethereum browser detected.");
+      }
+    }
 
   useEffect(() => {
     fetchData();
+    getAccount()
   }, []);
 
   console.log(data)
@@ -97,7 +134,7 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
                     {`Dr ${item.from} who is a ${item.specialization} from ${item.city}  wants to access your records`}
                   </div>
                   <div className="col-lg-3">
-                    <button className="btn btn-success">
+                    <button onClick={()=>giveAccess(item)} className="btn btn-success">
                       <FaCheck />
                     </button>
                     <button
@@ -126,5 +163,6 @@ function DoctorReq({ user, isLoggedIn, logoutUser }) {
 const mapStateToProps = (state) => ({
   isLoggedIn: state.user.isLoggedIn,
   user: state.user.user,
+  medichain:state.medichain.medichain
 });
 export default connect(mapStateToProps)(DoctorReq);

@@ -2,6 +2,7 @@ import React from "react";
 import { BiUserCircle } from "react-icons/bi";
 import {putRequests} from '../utils/postRequests'
 import { connect } from "react-redux";
+import { toast } from "react-toastify";
 
 
 function Profile({ item, doctor,user }) {
@@ -18,13 +19,16 @@ function Profile({ item, doctor,user }) {
         city: user.city,
         specialization:user.specialization,
       };
-    putRequests(mess).then(res=>console.log(res,"response"))
+    putRequests(mess).then(res=>{
+      if (res.success) {
+        toast.success("Request Submitted")
+      }
+      else{
+        toast.warning("Cannot put Request")
+      }
+    })
     };
-console.log(user,"User")
   return (
-
-
-
     <div className="container">
       <div className="card border-0 shadow">
         <div className="card-body">
