@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../../Components/Navbar";
 import SideBar from "../../Components/SideBar";
-import { BsFileEarmarkPlus, BsFileText } from "react-icons/bs";
-import { BiUserCircle } from "react-icons/bi";
+import {  FaTrashAlt } from "react-icons/fa";
 import { logoutUser } from "../../Redux/Actions/user";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { Link, Redirect } from "react-router-dom";
+import { getaccessList, revokeAccessFrom } from "../../utils/accessRequests";
+import Web3 from "web3";
+
 
 let list =[]
 function AccessList({ user, isLoggedIn, logoutUser,medichain }) {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [acc, setAcc] = useState(null);
 
+  console.log(user)
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
   };
@@ -22,26 +26,70 @@ function AccessList({ user, isLoggedIn, logoutUser,medichain }) {
   };
 
   const fetchData=async()=>{
-    // const noofDoc = await medichain.methods.doctorCount().call();
-    // //setCount(noofDoc)
-    // const mylist = await await medichain.methods
-    //   .accessList("0xaf50f3a65b5a98600d42ccd6959bc63b8e2dc974")
-    //   .call();
-    // console.log(mylist)
-    // // for(var i =0;i<=count ; i ++){
-    // //   const doc = await medichain.methods.accessList(i).call();
-    // //   console.log(doc)
-    // //   // list[i-1]= doc
-    // // }
-    // setData([...list])
+
+    setLoading(true)
+
+    getaccessList(user._id).then(res=>{
+      console.log(res)
+      if (res.success) {
+      setData(res.data[0].accesslist);
+      toast.success("Data shown")
+    } else {
+      setData([])
+      toast.warning("No Access given yet")
+    }})
   }
 
-  console.log(data)
+  const revokeAccess = (from, account) => {
+    revokeAccessFrom(from,user._id).then(res=>{
+      if(res.success){
+        toast.info("Access Removing")
+        medichain.methods
+          .revokeAccess(account)
+          .send({ from: acc })
+          .on("transactionHash", (hash) => {
+            console.log(hash);
+            toast.success("Success")
+            fetchData()
+          });
+      }
+      else{
+        toast.error("Cannot remove access")
+      }
+    })
+    
+
+
+  };
+
+
+  async function getAccount() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+      const web3 = await window.web3;
+      const accounts = await web3.eth.getAccounts();
+      toast.success("Account found");
+      console.log(accounts);
+      setAcc(accounts[0]);
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+      toast.error("Non-Ethereum browser detected.");
+    }
+  }
+  
+  
+  
+  
   useEffect(() => {
     fetchData();
+    getAccount()
   }, []);
 
-  console.log(isLoggedIn);
+
+
+
 
   if (!isLoggedIn) {
     return <Redirect to="/user/login" />;
@@ -71,20 +119,24 @@ function AccessList({ user, isLoggedIn, logoutUser,medichain }) {
               </div>
             </div>
           </div>
-          <div className="list-group-item">
-            <div className="row">
-              <div className="col-lg-6 border-right">
-                <p>Doctor Name</p>
+          {data &&
+            data.map((item, index) => (
+              <div key={index} className="list-group-item">
+                <div className="row">
+                  <div className="col-lg-6 border-right">
+                    <p>{item.name}</p>
+                  </div>
+                  <div className="col-lg-3 border-right text-center">
+                    <p>{item.date}</p>
+                  </div>
+                  <div className="col-lg-3 text-center">
+                    <button onClick={()=>revokeAccess(item._id,item.account)} className="btn btn-danger">
+                      <FaTrashAlt />
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="col-lg-3 border-right text-center">
-                <p>Date</p>
-              </div>
-              <div className="col-lg-3 text-center">
-                <p>Actions</p>
-              </div>
-            </div>
-          </div>
-          
+            ))}
         </div>
       </div>
     </div>
