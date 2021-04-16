@@ -22,18 +22,18 @@ function AccessList({ user, isLoggedIn, logoutUser,medichain }) {
   };
 
   const fetchData=async()=>{
-    const noofDoc = await medichain.methods.doctorCount().call();
-    setCount(noofDoc)
-    const mylist = await await medichain.methods
-      .accessList("0xaf50f3a65b5a98600d42ccd6959bc63b8e2dc974")
-      .call();
-    console.log(mylist)
-    // for(var i =0;i<=count ; i ++){
-    //   const doc = await medichain.methods.accessList(i).call();
-    //   console.log(doc)
-    //   // list[i-1]= doc
-    // }
-    setData([...list])
+    // const noofDoc = await medichain.methods.doctorCount().call();
+    // //setCount(noofDoc)
+    // const mylist = await await medichain.methods
+    //   .accessList("0xaf50f3a65b5a98600d42ccd6959bc63b8e2dc974")
+    //   .call();
+    // console.log(mylist)
+    // // for(var i =0;i<=count ; i ++){
+    // //   const doc = await medichain.methods.accessList(i).call();
+    // //   console.log(doc)
+    // //   // list[i-1]= doc
+    // // }
+    // setData([...list])
   }
 
   console.log(data)

@@ -8,7 +8,7 @@ const ModalPop = ({ item, modal,user, toggle ,doctor=true}) => {
     <Modal isOpen={modal} toggle={toggle}>
       <ModalBody className="w-100" className="w-100 ">
         {doctor ? (
-          <DoctorProfileModal user={item} doctor={true} toggle={toggle} />
+          <DoctorProfileModal item={item} doctor={true} toggle={toggle} />
         ) : (
           <Profile item={item} doctor={false} toggle={toggle} user={user} />
         )}
