@@ -11,6 +11,8 @@ import { Link, Redirect } from "react-router-dom";
 import { getrequests } from "../../utils/postRequests";
 import ReqModal from "../../Components/ReqModal";
 import { removeRequest } from "../../utils/deleteRequest";
+import { putaccesslist } from "../../utils/accessRequests";
+
 
 
 function DoctorReq({ user, isLoggedIn, logoutUser,medichain }) {
@@ -62,6 +64,15 @@ function DoctorReq({ user, isLoggedIn, logoutUser,medichain }) {
            .finally(() => setLoading(false));
   };
 
+  const logAccess = async (mydata) => {
+    putaccesslist(mydata).then((res) => {
+      if (res.success) {
+        toast.success("Database Updated");
+      } else {
+        toast.error("Try Again");
+      }
+    });
+  };
 
   const giveAccess=(item)=>{
     console.log(user)
@@ -76,6 +87,12 @@ function DoctorReq({ user, isLoggedIn, logoutUser,medichain }) {
       .send({ from: acc })
       .on("transactionHash", (hash) => {
         toast.success("Access Granted")
+         logAccess({
+           id: user._id,
+           doctor: item.from,
+           account: item.account,
+           date,
+         });
   });
   }
 
