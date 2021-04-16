@@ -36,7 +36,9 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
     buffer: null,
   });
   const [description, setDescription] = useState("");
-  const [owner, setOwner] = useState(user || "Owner name");
+  const [owner, setOwner] = useState("Owner Name");
+  
+  
 
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
@@ -44,7 +46,6 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
   const closeNav = () => {
     document.getElementById("mySidenav").style.width = "0";
   };
-  console.log(i);
   const captureFile = (event) => {
     event.preventDefault();
     const file = event.target.files[0];
@@ -97,7 +98,6 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
     }
   };
 
-  console.log(state);
   const loadBlockchainData = async () => {
     setloading(true);
 
@@ -146,7 +146,10 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
     await loadBlockchainData();
   }, [description]);
 
-  console.log(medichainContract);
+  const getAccessNo=async()=>{
+    const no = await medichain.methods.doctorCount().call();
+    console.log(no)
+  }
   
 
   if (!user) {
@@ -163,6 +166,7 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
             <div className="w-100 d-flex justify-content-between align-items-center p-3 bg-white mb-3 ">
               <h3>User Dashboard</h3>
               <Link to="/user/profile">Visit Profile</Link>
+              <button className="btn btn-warning" onClick={()=>getAccessNo()}>Check</button>
             </div>
             <div className="w-100 my-3">
               <div className="card border-0 mt-3">

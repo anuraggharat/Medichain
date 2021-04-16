@@ -73,7 +73,7 @@ function DoctorReq({ user, isLoggedIn, logoutUser,medichain }) {
       const date = day + "/" + month + "/" + year;
       medichain.methods
       .addDoctor(item.account, item.from, date)
-      .send({ from: user.account })
+      .send({ from: acc })
       .on("transactionHash", (hash) => {
         toast.success("Access Granted")
   });

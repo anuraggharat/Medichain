@@ -15,6 +15,7 @@ import PatientList from "./App/Pages/Doctor/PatientList";
 import UserProfile from "./App/Pages/User/UserProfile";
 import DoctorProfile from "./App/Pages/Doctor/DoctorProfile";
 import DoctorReq from "./App/Pages/User/DoctorReq";
+import AccessList from "./App/Pages/User/AccessList";
 
 toast.configure();
 function App() {
@@ -31,6 +32,8 @@ function App() {
             <Route path="/user/availabledoctors" component={DoctorList} />
             <Route path="/user/profile" component={UserProfile} />
             <Route path="/user/requests" component={DoctorReq} />
+            <Route path="/user/accesslist" component={AccessList} />
+
             {/* Healthcare worker routes */}
             <Route path="/doctor/login" component={DoctorLogin} />
             <Route path="/doctor/signup" component={DoctorSignup} />

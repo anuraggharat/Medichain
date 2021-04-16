@@ -96,14 +96,13 @@ function DoctorDash({ user, logoutUser, isLoggedIn,medichain }) {
   return (
     <div className="w-100 min-vh-100 bg-light">
       <SideBar closenav={closeNav} doctor={true} logoutUser={logoutUser} />
-      <Navbar sidebarToggler={openNav} name={user.name}  />
+      <Navbar sidebarToggler={openNav} name={user.name} />
 
       <div id="main">
         <div className="container bg-light">
           <div className="container ">
             <div className="w-100 p-3 bg-white mb-3 d-flex justify-content-between align-items-center">
               <h3>Doctor Dashboard</h3>
-              
             </div>
             <div className="row">
               <div className="col-lg-12 col-sm-12">
@@ -121,17 +120,23 @@ function DoctorDash({ user, logoutUser, isLoggedIn,medichain }) {
                       {images.map((item, index) => (
                         <div key={index} className="col-lg-4 p-4 ">
                           <div className=" card ">
+                            <div class="card-header">
+                              <h4>Owner:</h4>
+                              {item.owner}
+                            </div>
                             <ModalImage
                               small={`https://ipfs.infura.io/ipfs/${item.hash}`}
                               medium={`https://ipfs.infura.io/ipfs/${item.hash}`}
                               large={`https://ipfs.infura.io/ipfs/${item.hash}`}
                               alt={item.description}
                               showRotate={true}
-                              hideZoom={true}
+                              hideDownload={true}
                               className="w-100 h-100"
                             />
                             <div className="card-footer">
                               <h5>{item.description}</h5>
+                              <p>Owner</p>
+                              <p>{item.owner}</p>
                             </div>
                           </div>
                         </div>
