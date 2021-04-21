@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 
 
-function Profile({ item, doctor,user }) {
+function Profile({ item, doctor,user,fromDoctor=true }) {
   console.log(item,"Item");
     const generateReq = () => {
       const mess = {
@@ -103,12 +103,21 @@ function Profile({ item, doctor,user }) {
                 <div className="col-lg-4">
                   <p className="font-weight-bold">Address</p>
                 </div>
-                
+                <div className="col-lg-8 text-muted">
+                  <p>{item.account}</p>
+                </div>
               </div>
             </li>
+            {fromDoctor && (
               <div className="container mt-5">
-                <button className="btn btn-primary mx-auto" onClick={()=>generateReq()}>Put Request</button>
+                <button
+                  className="btn btn-primary mx-auto"
+                  onClick={() => generateReq()}
+                >
+                  Put Request
+                </button>
               </div>
+            )}
           </ul>
         </div>
       </div>

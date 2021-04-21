@@ -13,7 +13,7 @@ function UserProfile({ isLoggedIn, logoutUser, user }) {
   const closeNav = () => {
     document.getElementById("mySidenav").style.width = "0";
   };
-  if (!isLoggedIn) {
+  if (!user) {
     return <Redirect to="/user/login" />;
   }
   return (
@@ -21,7 +21,7 @@ function UserProfile({ isLoggedIn, logoutUser, user }) {
       <SideBar closenav={closeNav} logoutUser={logoutUser} doctor={false} />
       <Navbar sidebarToggler={openNav} name={user.name} />
       <div className="container mt-5">
-        <Profile user={user} doctor={false} />
+        <Profile item={user} doctor={false} fromDoctor={false} />
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ function DoctorProfile({ user, isLoggedIn, logoutUser }) {
       <SideBar closenav={closeNav} logoutUser={logoutUser} doctor={true} />
       <Navbar sidebarToggler={openNav} name={user.name} />
       <div className="container mt-5">
-        <Profile user={user} doctor={true} />
+        <Profile item={user} doctor={true} />
       </div>
     </div>
   );
