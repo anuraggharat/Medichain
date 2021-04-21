@@ -1,9 +1,79 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Link } from "react-router-dom";
 import Particles from "react-particles-js";
 import api from "../utils/api";
+import Web3 from "web3";
+import { connect } from "react-redux";
+import { loadMedichain } from "../Redux/Actions/medichain";
+import Medichain from "../../Ethereum/abis/Medichain.json";
+import { toast } from "react-toastify";
 
-export default function Welcome() {
+
+
+
+
+
+
+
+
+
+
+function Welcome({ loadMedichain }) {
+  const [loading, setloading] = useState(false);
+
+  const [account, setAccount] = useState(null);
+  const [medichainContract, setMedichainContract] = useState(null);
+
+  // load web3
+
+  const loadWeb3 = async () => {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
+    } else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+    } else {
+      window.alert(
+        "Non-Ethereum browser detected. You should consider trying MetaMask!"
+      );
+    }
+  };
+
+  const loadBlockchainData = async () => {
+    setloading(true);
+
+    const web3 = window.web3;
+    // Load account
+    const accounts = await web3.eth.getAccounts();
+    setAccount(accounts[0]);
+    console.log(accounts)
+
+    console.log("Accont", account);
+
+    // Network ID
+    const networkId = await web3.eth.net.getId();
+    const networkData = Medichain.networks[networkId];
+    if (networkData) {
+      console.log("got network");
+      const medichainabis = new web3.eth.Contract(
+        Medichain.abi,
+        networkData.address
+      );
+      //adds abis to local state
+      setMedichainContract(medichainabis);
+      //adds abis to global state
+      loadMedichain({ medichainabis, account });
+    }
+    else{
+      toast.error("Medichain Not deployed")
+    }
+  };
+
+  useEffect(async() => {
+    await loadWeb3();
+    await loadBlockchainData();
+  }, []);
+
   return (
     <div className="w-100 min-vh-100 bg-home d-relative d-flex justify-content-center flex-column text-center">
       <header className="d-flex justify-content-between align-items-center z-100">
@@ -78,3 +148,9 @@ export default function Welcome() {
     </div>
   );
 }
+const mapStateToProps = (state) => ({
+  medichain: state.medichain.medichain,
+});
+export default connect(mapStateToProps, {  loadMedichain })(
+  Welcome
+);
