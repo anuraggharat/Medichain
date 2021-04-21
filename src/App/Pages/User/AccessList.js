@@ -10,14 +10,12 @@ import { getaccessList, revokeAccessFrom } from "../../utils/accessRequests";
 import Web3 from "web3";
 
 
-let list =[]
 function AccessList({ user, isLoggedIn, logoutUser,medichain }) {
   const [data, setData] = useState([]);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [acc, setAcc] = useState(null);
 
-  console.log(user)
   const openNav = () => {
     document.getElementById("mySidenav").style.width = "250px";
   };
@@ -30,7 +28,6 @@ function AccessList({ user, isLoggedIn, logoutUser,medichain }) {
     setLoading(true)
 
     getaccessList(user._id).then(res=>{
-      console.log(res)
       if (res.success) {
       setData(res.data[0].accesslist);
       toast.success("Data shown")

@@ -1,7 +1,6 @@
 import api from "./api";
 
 export const putaccesslist = async (body) => {
-  console.log(body);
   const jsonbody = JSON.stringify(body);
   try {
     const res = await api.put("/user/addaccesser", jsonbody);
@@ -13,7 +12,6 @@ export const putaccesslist = async (body) => {
 };
 
 export const getaccessList = async (id) => {
-  console.log(id)
  
   try {
     const res = await api.get(`/user/getaccessslist/${id}`);
@@ -24,7 +22,6 @@ export const getaccessList = async (id) => {
 };
 
 export const revokeAccessFrom = async (from,id) => {
-  console.log(id);
    const body = {
      id: from,
    };

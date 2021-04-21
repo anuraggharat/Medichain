@@ -166,7 +166,6 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
             <div className="w-100 d-flex justify-content-between align-items-center p-3 bg-white mb-3 ">
               <h3>User Dashboard</h3>
               <Link to="/user/profile">Visit Profile</Link>
-              <button className="btn btn-warning" onClick={()=>getAccessNo()}>Check</button>
             </div>
             <div className="w-100 my-3">
               <div className="card border-0 mt-3">
