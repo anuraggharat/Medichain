@@ -54,7 +54,7 @@ function Welcome({ loadMedichain }) {
     const networkId = await web3.eth.net.getId();
     const networkData = Medichain.networks[networkId];
     if (networkData) {
-      console.log("got network");
+      toast.info("Network deployed!");
       const medichainabis = new web3.eth.Contract(
         Medichain.abi,
         networkData.address

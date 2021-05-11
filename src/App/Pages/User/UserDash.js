@@ -71,8 +71,8 @@ function UserDash({ user, logoutUser, isLoggedIn, medichain, loadMedichain }) {
         return;
       }
 
-      medichainContract.methods
-        .uploadImage(result[0].hash, description,owner)
+      medichain.methods
+        .uploadImage(result[0].hash, description, owner)
         .send({ from: account })
         .on("transactionHash", (hash) => {
           console.log(hash);
