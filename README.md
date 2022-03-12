@@ -34,21 +34,33 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ![User Dashboard](readme_Images/2.png)
 
-## 5. List of Doctors
+## 5. User giving access
+
+![User Dashboard](readme_Images/10.png)
+
+## 6. List of Doctors
 
 ![Doctor Listing](readme_Images/3.png)
 
-## 6. User Profile
+## 7. User Profile
 
 ![User Profile](readme_Images/4.png)
 
-## 7. Doctor Signup
+## 8. Doctor Signup
 
 ![Doctor Signin](readme_Images/7.png)
 
-## 8. Doctor Profile
+## 9. Doctor Profile
 
 ![Doctor Profile](readme_Images/8.png)
+
+## 10. Other Screenshots
+
+![Doctor Profile](readme_Images/11.PNG)
+![Doctor Profile](readme_Images/12.PNG)
+![Doctor Profile](readme_Images/13.PNG)
+
+
 
 ### Brief working of the Proposed system.
 
